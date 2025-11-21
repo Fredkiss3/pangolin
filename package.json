@@ -29,7 +29,8 @@
         "build:pg": "mkdir -p dist && next build && node esbuild.mjs -e server/index.ts -o dist/server.mjs && node esbuild.mjs -e server/setup/migrationsPg.ts -o dist/migrations.mjs",
         "start": "ENVIRONMENT=prod node dist/migrations.mjs && ENVIRONMENT=prod NODE_ENV=development node --enable-source-maps dist/server.mjs",
         "email": "email dev --dir server/emails/templates --port 3005",
-        "build:cli": "node esbuild.mjs -e cli/index.ts -o dist/cli.mjs"
+        "build:cli": "node esbuild.mjs -e cli/index.ts -o dist/cli.mjs",
+        "format": "prettier --write ./src ./server "
     },
     "dependencies": {
         "@asteasolutions/zod-to-openapi": "8.1.0",
@@ -138,8 +139,8 @@
         "@dotenvx/dotenvx": "1.51.1",
         "@esbuild-plugins/tsconfig-paths": "0.1.2",
         "@react-email/preview-server": "4.3.2",
-        "@tanstack/react-query-devtools": "^5.90.2",
         "@tailwindcss/postcss": "^4.1.17",
+        "@tanstack/react-query-devtools": "^5.90.2",
         "@types/better-sqlite3": "7.6.12",
         "@types/cookie-parser": "1.4.10",
         "@types/cors": "2.8.19",
@@ -149,9 +150,9 @@
         "@types/jmespath": "^0.15.2",
         "@types/js-yaml": "4.0.9",
         "@types/jsonwebtoken": "^9.0.10",
-        "@types/nprogress": "^0.2.3",
         "@types/node": "24.10.1",
         "@types/nodemailer": "7.0.3",
+        "@types/nprogress": "^0.2.3",
         "@types/pg": "8.15.6",
         "@types/react": "19.2.2",
         "@types/react-dom": "19.2.2",
@@ -163,6 +164,7 @@
         "esbuild": "0.27.0",
         "esbuild-node-externals": "1.19.1",
         "postcss": "^8",
+        "prettier": "^3.6.2",
         "react-email": "4.3.2",
         "tailwindcss": "^4.1.4",
         "tsc-alias": "1.8.16",
