@@ -114,23 +114,25 @@ export default function ResourceRules(props: {
     const [rulesEnabled, setRulesEnabled] = useState(resource.applyRules);
     const [openCountrySelect, setOpenCountrySelect] = useState(false);
     const [countrySelectValue, setCountrySelectValue] = useState("");
-    const [openAddRuleCountrySelect, setOpenAddRuleCountrySelect] = useState(false);
+    const [openAddRuleCountrySelect, setOpenAddRuleCountrySelect] =
+        useState(false);
     const router = useRouter();
     const t = useTranslations();
     const { env } = useEnvContext();
-    const isMaxmindAvailable = env.server.maxmind_db_path && env.server.maxmind_db_path.length > 0;
+    const isMaxmindAvailable =
+        env.server.maxmind_db_path && env.server.maxmind_db_path.length > 0;
 
     const RuleAction = {
-        ACCEPT: t('alwaysAllow'),
-        DROP: t('alwaysDeny'),
-        PASS: t('passToAuth')
+        ACCEPT: t("alwaysAllow"),
+        DROP: t("alwaysDeny"),
+        PASS: t("passToAuth")
     } as const;
 
     const RuleMatch = {
-        PATH: t('path'),
+        PATH: t("path"),
         IP: "IP",
-        CIDR: t('ipAddressRange'),
-        COUNTRY: t('country')
+        CIDR: t("ipAddressRange"),
+        COUNTRY: t("country")
     } as const;
 
     const addRuleForm = useForm({
@@ -155,10 +157,10 @@ export default function ResourceRules(props: {
                 console.error(err);
                 toast({
                     variant: "destructive",
-                    title: t('rulesErrorFetch'),
+                    title: t("rulesErrorFetch"),
                     description: formatAxiosError(
                         err,
-                        t('rulesErrorFetchDescription')
+                        t("rulesErrorFetchDescription")
                     )
                 });
             } finally {
@@ -179,8 +181,8 @@ export default function ResourceRules(props: {
         if (isDuplicate) {
             toast({
                 variant: "destructive",
-                title: t('rulesErrorDuplicate'),
-                description: t('rulesErrorDuplicateDescription')
+                title: t("rulesErrorDuplicate"),
+                description: t("rulesErrorDuplicateDescription")
             });
             return;
         }
@@ -188,8 +190,8 @@ export default function ResourceRules(props: {
         if (data.match === "CIDR" && !isValidCIDR(data.value)) {
             toast({
                 variant: "destructive",
-                title: t('rulesErrorInvalidIpAddressRange'),
-                description: t('rulesErrorInvalidIpAddressRangeDescription')
+                title: t("rulesErrorInvalidIpAddressRange"),
+                description: t("rulesErrorInvalidIpAddressRangeDescription")
             });
             setLoading(false);
             return;
@@ -197,8 +199,8 @@ export default function ResourceRules(props: {
         if (data.match === "PATH" && !isValidUrlGlobPattern(data.value)) {
             toast({
                 variant: "destructive",
-                title: t('rulesErrorInvalidUrl'),
-                description: t('rulesErrorInvalidUrlDescription')
+                title: t("rulesErrorInvalidUrl"),
+                description: t("rulesErrorInvalidUrlDescription")
             });
             setLoading(false);
             return;
@@ -206,17 +208,22 @@ export default function ResourceRules(props: {
         if (data.match === "IP" && !isValidIP(data.value)) {
             toast({
                 variant: "destructive",
-                title: t('rulesErrorInvalidIpAddress'),
-                description: t('rulesErrorInvalidIpAddressDescription')
+                title: t("rulesErrorInvalidIpAddress"),
+                description: t("rulesErrorInvalidIpAddressDescription")
             });
             setLoading(false);
             return;
         }
-        if (data.match === "COUNTRY" && !COUNTRIES.some(c => c.code === data.value)) {
+        if (
+            data.match === "COUNTRY" &&
+            !COUNTRIES.some((c) => c.code === data.value)
+        ) {
             toast({
                 variant: "destructive",
-                title: t('rulesErrorInvalidCountry'),
-                description: t('rulesErrorInvalidCountryDescription') || "Invalid country code."
+                title: t("rulesErrorInvalidCountry"),
+                description:
+                    t("rulesErrorInvalidCountryDescription") ||
+                    "Invalid country code."
             });
             setLoading(false);
             return;
@@ -265,13 +272,13 @@ export default function ResourceRules(props: {
     function getValueHelpText(type: string) {
         switch (type) {
             case "CIDR":
-                return t('rulesMatchIpAddressRangeDescription');
+                return t("rulesMatchIpAddressRangeDescription");
             case "IP":
-                return t('rulesMatchIpAddress');
+                return t("rulesMatchIpAddress");
             case "PATH":
-                return t('rulesMatchUrl');
+                return t("rulesMatchUrl");
             case "COUNTRY":
-                return t('rulesMatchCountry');
+                return t("rulesMatchCountry");
         }
     }
 
@@ -288,10 +295,10 @@ export default function ResourceRules(props: {
                     console.error(err);
                     toast({
                         variant: "destructive",
-                        title: t('rulesErrorUpdate'),
+                        title: t("rulesErrorUpdate"),
                         description: formatAxiosError(
                             err,
-                            t('rulesErrorUpdateDescription')
+                            t("rulesErrorUpdateDescription")
                         )
                     });
                     throw err;
@@ -314,8 +321,10 @@ export default function ResourceRules(props: {
                 if (rule.match === "CIDR" && !isValidCIDR(rule.value)) {
                     toast({
                         variant: "destructive",
-                        title: t('rulesErrorInvalidIpAddressRange'),
-                        description: t('rulesErrorInvalidIpAddressRangeDescription')
+                        title: t("rulesErrorInvalidIpAddressRange"),
+                        description: t(
+                            "rulesErrorInvalidIpAddressRangeDescription"
+                        )
                     });
                     setLoading(false);
                     return;
@@ -326,8 +335,8 @@ export default function ResourceRules(props: {
                 ) {
                     toast({
                         variant: "destructive",
-                        title: t('rulesErrorInvalidUrl'),
-                        description: t('rulesErrorInvalidUrlDescription')
+                        title: t("rulesErrorInvalidUrl"),
+                        description: t("rulesErrorInvalidUrlDescription")
                     });
                     setLoading(false);
                     return;
@@ -335,8 +344,8 @@ export default function ResourceRules(props: {
                 if (rule.match === "IP" && !isValidIP(rule.value)) {
                     toast({
                         variant: "destructive",
-                        title: t('rulesErrorInvalidIpAddress'),
-                        description: t('rulesErrorInvalidIpAddressDescription')
+                        title: t("rulesErrorInvalidIpAddress"),
+                        description: t("rulesErrorInvalidIpAddressDescription")
                     });
                     setLoading(false);
                     return;
@@ -345,8 +354,8 @@ export default function ResourceRules(props: {
                 if (rule.priority === undefined) {
                     toast({
                         variant: "destructive",
-                        title: t('rulesErrorInvalidPriority'),
-                        description: t('rulesErrorInvalidPriorityDescription')
+                        title: t("rulesErrorInvalidPriority"),
+                        description: t("rulesErrorInvalidPriorityDescription")
                     });
                     setLoading(false);
                     return;
@@ -357,8 +366,8 @@ export default function ResourceRules(props: {
                 if (priorities.length !== new Set(priorities).size) {
                     toast({
                         variant: "destructive",
-                        title: t('rulesErrorDuplicatePriority'),
-                        description: t('rulesErrorDuplicatePriorityDescription')
+                        title: t("rulesErrorDuplicatePriority"),
+                        description: t("rulesErrorDuplicatePriorityDescription")
                     });
                     setLoading(false);
                     return;
@@ -397,8 +406,8 @@ export default function ResourceRules(props: {
             }
 
             toast({
-                title: t('ruleUpdated'),
-                description: t('ruleUpdatedDescription')
+                title: t("ruleUpdated"),
+                description: t("ruleUpdatedDescription")
             });
 
             setRulesToRemove([]);
@@ -407,10 +416,10 @@ export default function ResourceRules(props: {
             console.error(err);
             toast({
                 variant: "destructive",
-                title: t('ruleErrorUpdate'),
+                title: t("ruleErrorUpdate"),
                 description: formatAxiosError(
                     err,
-                    t('ruleErrorUpdateDescription')
+                    t("ruleErrorUpdateDescription")
                 )
             });
         }
@@ -428,7 +437,7 @@ export default function ResourceRules(props: {
                             column.toggleSorting(column.getIsSorted() === "asc")
                         }
                     >
-                        {t('rulesPriority')}
+                        {t("rulesPriority")}
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
                 );
@@ -440,15 +449,18 @@ export default function ResourceRules(props: {
                     type="number"
                     onClick={(e) => e.currentTarget.focus()}
                     onBlur={(e) => {
-                        const parsed = z.int()
+                        const parsed = z
+                            .int()
                             .optional()
                             .safeParse(e.target.value);
 
                         if (!parsed.data) {
                             toast({
                                 variant: "destructive",
-                                title: t('rulesErrorInvalidIpAddress'), // correct priority or IP?
-                                description: t('rulesErrorInvalidPriorityDescription')
+                                title: t("rulesErrorInvalidIpAddress"), // correct priority or IP?
+                                description: t(
+                                    "rulesErrorInvalidPriorityDescription"
+                                )
                             });
                             setLoading(false);
                             return;
@@ -463,7 +475,7 @@ export default function ResourceRules(props: {
         },
         {
             accessorKey: "action",
-            header: t('rulesAction'),
+            header: t("rulesAction"),
             cell: ({ row }) => (
                 <Select
                     defaultValue={row.original.action}
@@ -486,12 +498,18 @@ export default function ResourceRules(props: {
         },
         {
             accessorKey: "match",
-            header: t('rulesMatchType'),
+            header: t("rulesMatchType"),
             cell: ({ row }) => (
                 <Select
                     defaultValue={row.original.match}
-                    onValueChange={(value: "CIDR" | "IP" | "PATH" | "COUNTRY") =>
-                        updateRule(row.original.ruleId, { match: value, value: value === "COUNTRY" ? "US" : row.original.value })
+                    onValueChange={(
+                        value: "CIDR" | "IP" | "PATH" | "COUNTRY"
+                    ) =>
+                        updateRule(row.original.ruleId, {
+                            match: value,
+                            value:
+                                value === "COUNTRY" ? "US" : row.original.value
+                        })
                     }
                 >
                     <SelectTrigger className="min-w-[125px]">
@@ -502,7 +520,9 @@ export default function ResourceRules(props: {
                         <SelectItem value="IP">{RuleMatch.IP}</SelectItem>
                         <SelectItem value="CIDR">{RuleMatch.CIDR}</SelectItem>
                         {isMaxmindAvailable && (
-                            <SelectItem value="COUNTRY">{RuleMatch.COUNTRY}</SelectItem>
+                            <SelectItem value="COUNTRY">
+                                {RuleMatch.COUNTRY}
+                            </SelectItem>
                         )}
                     </SelectContent>
                 </Select>
@@ -510,8 +530,8 @@ export default function ResourceRules(props: {
         },
         {
             accessorKey: "value",
-            header: t('value'),
-            cell: ({ row }) => (
+            header: t("value"),
+            cell: ({ row }) =>
                 row.original.match === "COUNTRY" ? (
                     <Popover>
                         <PopoverTrigger asChild>
@@ -521,29 +541,43 @@ export default function ResourceRules(props: {
                                 className="min-w-[200px] justify-between"
                             >
                                 {row.original.value
-                                    ? COUNTRIES.find((country) => country.code === row.original.value)?.name +
-                                      " (" + row.original.value + ")"
-                                    : t('selectCountry')}
+                                    ? COUNTRIES.find(
+                                          (country) =>
+                                              country.code ===
+                                              row.original.value
+                                      )?.name +
+                                      " (" +
+                                      row.original.value +
+                                      ")"
+                                    : t("selectCountry")}
                                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="min-w-[200px] p-0">
                             <Command>
-                                <CommandInput placeholder={t('searchCountries')} />
+                                <CommandInput
+                                    placeholder={t("searchCountries")}
+                                />
                                 <CommandList>
-                                    <CommandEmpty>{t('noCountryFound')}</CommandEmpty>
+                                    <CommandEmpty>
+                                        {t("noCountryFound")}
+                                    </CommandEmpty>
                                     <CommandGroup>
                                         {COUNTRIES.map((country) => (
                                             <CommandItem
                                                 key={country.code}
                                                 value={country.name}
                                                 onSelect={() => {
-                                                    updateRule(row.original.ruleId, { value: country.code });
+                                                    updateRule(
+                                                        row.original.ruleId,
+                                                        { value: country.code }
+                                                    );
                                                 }}
                                             >
                                                 <Check
                                                     className={`mr-2 h-4 w-4 ${
-                                                        row.original.value === country.code
+                                                        row.original.value ===
+                                                        country.code
                                                             ? "opacity-100"
                                                             : "opacity-0"
                                                     }`}
@@ -567,11 +601,10 @@ export default function ResourceRules(props: {
                         }
                     />
                 )
-            )
         },
         {
             accessorKey: "enabled",
-            header: t('enabled'),
+            header: t("enabled"),
             cell: ({ row }) => (
                 <Switch
                     defaultChecked={row.original.enabled}
@@ -589,7 +622,7 @@ export default function ResourceRules(props: {
                         variant="outline"
                         onClick={() => removeRule(row.original.ruleId)}
                     >
-                        {t('delete')}
+                        {t("delete")}
                     </Button>
                 </div>
             )
@@ -663,10 +696,10 @@ export default function ResourceRules(props: {
             <SettingsSection>
                 <SettingsSectionHeader>
                     <SettingsSectionTitle>
-                        {t('rulesResource')}
+                        {t("rulesResource")}
                     </SettingsSectionTitle>
                     <SettingsSectionDescription>
-                        {t('rulesResourceDescription')}
+                        {t("rulesResourceDescription")}
                     </SettingsSectionDescription>
                 </SettingsSectionHeader>
                 <SettingsSectionBody>
@@ -674,7 +707,7 @@ export default function ResourceRules(props: {
                         <div className="flex items-center space-x-2">
                             <SwitchInput
                                 id="rules-toggle"
-                                label={t('rulesEnable')}
+                                label={t("rulesEnable")}
                                 defaultChecked={rulesEnabled}
                                 onCheckedChange={(val) => setRulesEnabled(val)}
                             />
@@ -691,7 +724,9 @@ export default function ResourceRules(props: {
                                         name="action"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>{t('rulesAction')}</FormLabel>
+                                                <FormLabel>
+                                                    {t("rulesAction")}
+                                                </FormLabel>
                                                 <FormControl>
                                                     <Select
                                                         value={field.value}
@@ -704,13 +739,19 @@ export default function ResourceRules(props: {
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             <SelectItem value="ACCEPT">
-                                                                {RuleAction.ACCEPT}
+                                                                {
+                                                                    RuleAction.ACCEPT
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="DROP">
-                                                                {RuleAction.DROP}
+                                                                {
+                                                                    RuleAction.DROP
+                                                                }
                                                             </SelectItem>
                                                             <SelectItem value="PASS">
-                                                                {RuleAction.PASS}
+                                                                {
+                                                                    RuleAction.PASS
+                                                                }
                                                             </SelectItem>
                                                         </SelectContent>
                                                     </Select>
@@ -724,11 +765,15 @@ export default function ResourceRules(props: {
                                         name="match"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>{t('rulesMatchType')}</FormLabel>
+                                                <FormLabel>
+                                                    {t("rulesMatchType")}
+                                                </FormLabel>
                                                 <FormControl>
                                                     <Select
                                                         value={field.value}
-                                                        onValueChange={field.onChange}
+                                                        onValueChange={
+                                                            field.onChange
+                                                        }
                                                     >
                                                         <SelectTrigger className="w-full">
                                                             <SelectValue />
@@ -736,7 +781,9 @@ export default function ResourceRules(props: {
                                                         <SelectContent>
                                                             {resource.http && (
                                                                 <SelectItem value="PATH">
-                                                                    {RuleMatch.PATH}
+                                                                    {
+                                                                        RuleMatch.PATH
+                                                                    }
                                                                 </SelectItem>
                                                             )}
                                                             <SelectItem value="IP">
@@ -747,7 +794,9 @@ export default function ResourceRules(props: {
                                                             </SelectItem>
                                                             {isMaxmindAvailable && (
                                                                 <SelectItem value="COUNTRY">
-                                                                    {RuleMatch.COUNTRY}
+                                                                    {
+                                                                        RuleMatch.COUNTRY
+                                                                    }
                                                                 </SelectItem>
                                                             )}
                                                         </SelectContent>
@@ -763,7 +812,7 @@ export default function ResourceRules(props: {
                                         render={({ field }) => (
                                             <FormItem className="gap-1">
                                                 <InfoPopup
-                                                    text={t('value')}
+                                                    text={t("value")}
                                                     info={
                                                         getValueHelpText(
                                                             addRuleForm.watch(
@@ -773,47 +822,99 @@ export default function ResourceRules(props: {
                                                     }
                                                 />
                                                 <FormControl>
-                                                    {addRuleForm.watch("match") === "COUNTRY" ? (
-                                                        <Popover open={openAddRuleCountrySelect} onOpenChange={setOpenAddRuleCountrySelect}>
-                                                            <PopoverTrigger asChild>
+                                                    {addRuleForm.watch(
+                                                        "match"
+                                                    ) === "COUNTRY" ? (
+                                                        <Popover
+                                                            open={
+                                                                openAddRuleCountrySelect
+                                                            }
+                                                            onOpenChange={
+                                                                setOpenAddRuleCountrySelect
+                                                            }
+                                                        >
+                                                            <PopoverTrigger
+                                                                asChild
+                                                            >
                                                                 <Button
                                                                     variant="outline"
                                                                     role="combobox"
-                                                                    aria-expanded={openAddRuleCountrySelect}
+                                                                    aria-expanded={
+                                                                        openAddRuleCountrySelect
+                                                                    }
                                                                     className="w-full justify-between"
                                                                 >
                                                                     {field.value
-                                                                        ? COUNTRIES.find((country) => country.code === field.value)?.name +
-                                                                          " (" + field.value + ")"
-                                                                        : t('selectCountry')}
+                                                                        ? COUNTRIES.find(
+                                                                              (
+                                                                                  country
+                                                                              ) =>
+                                                                                  country.code ===
+                                                                                  field.value
+                                                                          )
+                                                                              ?.name +
+                                                                          " (" +
+                                                                          field.value +
+                                                                          ")"
+                                                                        : t(
+                                                                              "selectCountry"
+                                                                          )}
                                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                                 </Button>
                                                             </PopoverTrigger>
                                                             <PopoverContent className="w-full p-0">
                                                                 <Command>
-                                                                    <CommandInput placeholder={t('searchCountries')} />
+                                                                    <CommandInput
+                                                                        placeholder={t(
+                                                                            "searchCountries"
+                                                                        )}
+                                                                    />
                                                                     <CommandList>
-                                                                        <CommandEmpty>{t('noCountryFound')}</CommandEmpty>
+                                                                        <CommandEmpty>
+                                                                            {t(
+                                                                                "noCountryFound"
+                                                                            )}
+                                                                        </CommandEmpty>
                                                                         <CommandGroup>
-                                                                            {COUNTRIES.map((country) => (
-                                                                                <CommandItem
-                                                                                    key={country.code}
-                                                                                    value={country.name}
-                                                                                    onSelect={() => {
-                                                                                        field.onChange(country.code);
-                                                                                        setOpenAddRuleCountrySelect(false);
-                                                                                    }}
-                                                                                >
-                                                                                    <Check
-                                                                                        className={`mr-2 h-4 w-4 ${
-                                                                                            field.value === country.code
-                                                                                                ? "opacity-100"
-                                                                                                : "opacity-0"
-                                                                                        }`}
-                                                                                    />
-                                                                                    {country.name} ({country.code})
-                                                                                </CommandItem>
-                                                                            ))}
+                                                                            {COUNTRIES.map(
+                                                                                (
+                                                                                    country
+                                                                                ) => (
+                                                                                    <CommandItem
+                                                                                        key={
+                                                                                            country.code
+                                                                                        }
+                                                                                        value={
+                                                                                            country.name
+                                                                                        }
+                                                                                        onSelect={() => {
+                                                                                            field.onChange(
+                                                                                                country.code
+                                                                                            );
+                                                                                            setOpenAddRuleCountrySelect(
+                                                                                                false
+                                                                                            );
+                                                                                        }}
+                                                                                    >
+                                                                                        <Check
+                                                                                            className={`mr-2 h-4 w-4 ${
+                                                                                                field.value ===
+                                                                                                country.code
+                                                                                                    ? "opacity-100"
+                                                                                                    : "opacity-0"
+                                                                                            }`}
+                                                                                        />
+                                                                                        {
+                                                                                            country.name
+                                                                                        }{" "}
+                                                                                        (
+                                                                                        {
+                                                                                            country.code
+                                                                                        }
+                                                                                        )
+                                                                                    </CommandItem>
+                                                                                )
+                                                                            )}
                                                                         </CommandGroup>
                                                                     </CommandList>
                                                                 </Command>
@@ -832,7 +933,7 @@ export default function ResourceRules(props: {
                                         variant="secondary"
                                         disabled={!rulesEnabled}
                                     >
-                                        {t('ruleSubmit')}
+                                        {t("ruleSubmit")}
                                     </Button>
                                 </div>
                             </form>
@@ -846,8 +947,8 @@ export default function ResourceRules(props: {
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
-                                                          header.column.columnDef
-                                                              .header,
+                                                          header.column
+                                                              .columnDef.header,
                                                           header.getContext()
                                                       )}
                                             </TableHead>
@@ -859,14 +960,17 @@ export default function ResourceRules(props: {
                                 {table.getRowModel().rows?.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow key={row.id}>
-                                            {row.getVisibleCells().map((cell) => (
-                                                <TableCell key={cell.id}>
-                                                    {flexRender(
-                                                        cell.column.columnDef.cell,
-                                                        cell.getContext()
-                                                    )}
-                                                </TableCell>
-                                            ))}
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => (
+                                                    <TableCell key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </TableCell>
+                                                ))}
                                         </TableRow>
                                     ))
                                 ) : (
@@ -875,7 +979,7 @@ export default function ResourceRules(props: {
                                             colSpan={columns.length}
                                             className="h-24 text-center"
                                         >
-                                            {t('rulesNoOne')}
+                                            {t("rulesNoOne")}
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -894,7 +998,7 @@ export default function ResourceRules(props: {
                     loading={loading}
                     disabled={loading}
                 >
-                    {t('saveAllSettings')}
+                    {t("saveAllSettings")}
                 </Button>
             </div>
         </SettingsContainer>

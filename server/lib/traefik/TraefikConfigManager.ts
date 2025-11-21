@@ -448,7 +448,9 @@ export class TraefikConfigManager {
                 config.getRawConfig().traefik.site_types,
                 build == "oss", // filter out the namespace domains in open source
                 build != "oss", // generate the login pages on the cloud and hybrid,
-                build == "saas" ? false : config.getRawConfig().traefik.allow_raw_resources // dont allow raw resources on saas otherwise use config
+                build == "saas"
+                    ? false
+                    : config.getRawConfig().traefik.allow_raw_resources // dont allow raw resources on saas otherwise use config
             );
 
             const domains = new Set<string>();

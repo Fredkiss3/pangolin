@@ -17,25 +17,26 @@ import { getOrgTierData } from "#dynamic/lib/billing";
 import { TierId } from "@server/lib/billing/tiers";
 
 const paramsSchema = z.strictObject({
-        orgId: z.string().nonempty()
-    });
+    orgId: z.string().nonempty()
+});
 
 const bodySchema = z.strictObject({
-        email: z.email()
-            .toLowerCase()
-            .optional()
-            .refine((data) => {
-                if (data) {
-                    return z.email().safeParse(data).success;
-                }
-                return true;
-            }),
-        username: z.string().nonempty().toLowerCase(),
-        name: z.string().optional(),
-        type: z.enum(["internal", "oidc"]).optional(),
-        idpId: z.number().optional(),
-        roleId: z.number()
-    });
+    email: z
+        .email()
+        .toLowerCase()
+        .optional()
+        .refine((data) => {
+            if (data) {
+                return z.email().safeParse(data).success;
+            }
+            return true;
+        }),
+    username: z.string().nonempty().toLowerCase(),
+    name: z.string().optional(),
+    type: z.enum(["internal", "oidc"]).optional(),
+    idpId: z.number().optional(),
+    roleId: z.number()
+});
 
 export type CreateOrgUserResponse = {};
 
@@ -84,14 +85,7 @@ export async function createOrgUser(
         }
 
         const { orgId } = parsedParams.data;
-        const {
-            username,
-            email,
-            name,
-            type,
-            idpId,
-            roleId
-        } = parsedBody.data;
+        const { username, email, name, type, idpId, roleId } = parsedBody.data;
 
         if (build == "saas") {
             const usage = await usageService.getUsage(orgId, FeatureId.USERS);
@@ -239,7 +233,7 @@ export async function createOrgUser(
                             type: "oidc",
                             idpId,
                             dateCreated: new Date().toISOString(),
-                            emailVerified: true,
+                            emailVerified: true
                         })
                         .returning();
 

@@ -70,4 +70,4 @@ export async function ensureSetupToken() {
         console.error("Failed to ensure setup token:", error);
         throw error;
     }
-} 
+}

@@ -158,7 +158,10 @@ export async function updateAndGenerateEndpointDestinations(
             .where(eq(clients.clientId, olm.clientId))
             .returning();
 
-        if (await checkExitNodeOrg(exitNode.exitNodeId, client.orgId) && checkOrg) {
+        if (
+            (await checkExitNodeOrg(exitNode.exitNodeId, client.orgId)) &&
+            checkOrg
+        ) {
             // not allowed
             logger.warn(
                 `Exit node ${exitNode.exitNodeId} is not allowed for org ${client.orgId}`
@@ -253,7 +256,10 @@ export async function updateAndGenerateEndpointDestinations(
             .where(eq(sites.siteId, newt.siteId))
             .limit(1);
 
-        if (await checkExitNodeOrg(exitNode.exitNodeId, site.orgId) && checkOrg) {
+        if (
+            (await checkExitNodeOrg(exitNode.exitNodeId, site.orgId)) &&
+            checkOrg
+        ) {
             // not allowed
             logger.warn(
                 `Exit node ${exitNode.exitNodeId} is not allowed for org ${site.orgId}`

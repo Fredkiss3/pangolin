@@ -12,8 +12,8 @@ import { fromError } from "zod-validation-error";
 import { OpenAPITags, registry } from "@server/openApi";
 
 const getClientSchema = z.strictObject({
-        clientId: z.string().transform(stoi).pipe(z.int().positive())
-    });
+    clientId: z.string().transform(stoi).pipe(z.int().positive())
+});
 
 async function query(clientId: number) {
     // Get the client

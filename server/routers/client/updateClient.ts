@@ -21,15 +21,13 @@ import { sendToExitNode } from "#dynamic/lib/exitNodes";
 import { hashPassword } from "@server/auth/password";
 
 const updateClientParamsSchema = z.strictObject({
-        clientId: z.string().transform(Number).pipe(z.int().positive())
-    });
+    clientId: z.string().transform(Number).pipe(z.int().positive())
+});
 
 const updateClientSchema = z.strictObject({
-        name: z.string().min(1).max(255).optional(),
-        siteIds: z
-            .array(z.int().positive())
-            .optional(),
-    });
+    name: z.string().min(1).max(255).optional(),
+    siteIds: z.array(z.int().positive()).optional()
+});
 
 export type UpdateClientBody = z.infer<typeof updateClientSchema>;
 
@@ -85,7 +83,6 @@ export async function updateClient(
         }
 
         const { clientId } = parsedParams.data;
-
 
         // Fetch the client to make sure it exists and the user has access to it
         const [client] = await db

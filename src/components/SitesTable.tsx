@@ -395,9 +395,7 @@ export default function SitesTable({ sites, orgId }: SitesTableProps) {
                     }}
                     dialog={
                         <div className="">
-                            <p>
-                                {t("siteQuestionRemove")}
-                            </p>
+                            <p>{t("siteQuestionRemove")}</p>
                             <p>{t("siteMessageRemove")}</p>
                         </div>
                     }

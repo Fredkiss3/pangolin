@@ -10,4 +10,3 @@
  *
  * This file is not licensed under the AGPLv3.
  */
-

@@ -80,9 +80,9 @@ export default function ProfileIcon() {
                 open={openSecurityKey}
                 setOpen={setOpenSecurityKey}
             />
-            <ChangePasswordDialog 
-                open={openChangePassword} 
-                setOpen={setOpenChangePassword} 
+            <ChangePasswordDialog
+                open={openChangePassword}
+                setOpen={setOpenChangePassword}
             />
 
             <DropdownMenu>

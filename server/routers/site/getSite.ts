@@ -12,15 +12,15 @@ import { fromError } from "zod-validation-error";
 import { OpenAPITags, registry } from "@server/openApi";
 
 const getSiteSchema = z.strictObject({
-        siteId: z
-            .string()
-            .optional()
-            .transform(stoi)
-            .pipe(z.int().positive().optional())
-            .optional(),
-        niceId: z.string().optional(),
-        orgId: z.string().optional()
-    });
+    siteId: z
+        .string()
+        .optional()
+        .transform(stoi)
+        .pipe(z.int().positive().optional())
+        .optional(),
+    niceId: z.string().optional(),
+    orgId: z.string().optional()
+});
 
 async function query(siteId?: number, niceId?: string, orgId?: string) {
     if (siteId) {

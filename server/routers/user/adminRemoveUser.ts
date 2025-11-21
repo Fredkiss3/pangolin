@@ -10,8 +10,8 @@ import logger from "@server/logger";
 import { fromError } from "zod-validation-error";
 
 const removeUserSchema = z.strictObject({
-        userId: z.string()
-    });
+    userId: z.string()
+});
 
 export async function adminRemoveUser(
     req: Request,

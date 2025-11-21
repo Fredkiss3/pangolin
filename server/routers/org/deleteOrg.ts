@@ -14,8 +14,8 @@ import { deletePeer } from "../gerbil/peers";
 import { OpenAPITags, registry } from "@server/openApi";
 
 const deleteOrgSchema = z.strictObject({
-        orgId: z.string()
-    });
+    orgId: z.string()
+});
 
 export type DeleteOrgResponse = {};
 

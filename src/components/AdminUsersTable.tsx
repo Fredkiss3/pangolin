@@ -187,7 +187,7 @@ export default function UsersTable({ users }: Props) {
                     <div className="flex flex-row items-center gap-2">
                         <span>
                             {userRow.twoFactorEnabled ||
-                                userRow.twoFactorSetupRequested ? (
+                            userRow.twoFactorSetupRequested ? (
                                 <span className="text-green-500">
                                     {t("enabled")}
                                 </span>

@@ -288,9 +288,7 @@ export default function ExitNodesTable({
                     }}
                     dialog={
                         <div>
-                            <p>
-                                {t("remoteExitNodeQuestionRemove")}
-                            </p>
+                            <p>{t("remoteExitNodeQuestionRemove")}</p>
 
                             <p>{t("remoteExitNodeMessageRemove")}</p>
                         </div>

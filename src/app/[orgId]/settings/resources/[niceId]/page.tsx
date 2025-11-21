@@ -4,7 +4,5 @@ export default async function ResourcePage(props: {
     params: Promise<{ niceId: string; orgId: string }>;
 }) {
     const params = await props.params;
-    redirect(
-        `/${params.orgId}/settings/resources/${params.niceId}/proxy`
-    );
+    redirect(`/${params.orgId}/settings/resources/${params.niceId}/proxy`);
 }

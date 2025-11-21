@@ -16,10 +16,11 @@ import { OpenAPITags, registry } from "@server/openApi";
 import { vs } from "@react-email/components";
 
 const updateTargetParamsSchema = z.strictObject({
-        targetId: z.string().transform(Number).pipe(z.int().positive())
-    });
+    targetId: z.string().transform(Number).pipe(z.int().positive())
+});
 
-const updateTargetBodySchema = z.strictObject({
+const updateTargetBodySchema = z
+    .strictObject({
         siteId: z.int().positive(),
         ip: z.string().refine(isTargetValid),
         method: z.string().min(1).max(10).optional().nullable(),
@@ -32,21 +33,26 @@ const updateTargetBodySchema = z.strictObject({
         hcHostname: z.string().optional().nullable(),
         hcPort: z.int().positive().optional().nullable(),
         hcInterval: z.int().positive().min(5).optional().nullable(),
-        hcUnhealthyInterval: z.int()
-            .positive()
-            .min(5)
-            .optional()
-            .nullable(),
+        hcUnhealthyInterval: z.int().positive().min(5).optional().nullable(),
         hcTimeout: z.int().positive().min(1).optional().nullable(),
-        hcHeaders: z.array(z.strictObject({ name: z.string(), value: z.string() })).nullable().optional(),
+        hcHeaders: z
+            .array(z.strictObject({ name: z.string(), value: z.string() }))
+            .nullable()
+            .optional(),
         hcFollowRedirects: z.boolean().optional().nullable(),
         hcMethod: z.string().min(1).optional().nullable(),
         hcStatus: z.int().optional().nullable(),
         path: z.string().optional().nullable(),
-        pathMatchType: z.enum(["exact", "prefix", "regex"]).optional().nullable(),
+        pathMatchType: z
+            .enum(["exact", "prefix", "regex"])
+            .optional()
+            .nullable(),
         rewritePath: z.string().optional().nullable(),
-        rewritePathType: z.enum(["exact", "prefix", "regex", "stripPrefix"]).optional().nullable(),
-        priority: z.int().min(1).max(1000).optional(),
+        rewritePathType: z
+            .enum(["exact", "prefix", "regex", "stripPrefix"])
+            .optional()
+            .nullable(),
+        priority: z.int().min(1).max(1000).optional()
     })
     .refine((data) => Object.keys(data).length > 0, {
         error: "At least one field must be provided for update"
@@ -165,7 +171,9 @@ export async function updateTarget(
 
         if (foundTarget) {
             // log a warning
-            logger.warn(`Target with IP ${targetData.ip}, port ${targetData.port}, method ${targetData.method} already exists for resource ID ${target.resourceId}`);
+            logger.warn(
+                `Target with IP ${targetData.ip}, port ${targetData.port}, method ${targetData.method} already exists for resource ID ${target.resourceId}`
+            );
         }
 
         const { internalPort, targetIps } = await pickPort(site.siteId!, db);

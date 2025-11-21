@@ -66,7 +66,9 @@ export const handleGetConfigMessage: MessageHandler = async (context) => {
 
     // we need to wait for hole punch success
     if (!existingSite.endpoint) {
-        logger.debug(`In newt get config: existing site ${existingSite.siteId} has no endpoint, skipping`);
+        logger.debug(
+            `In newt get config: existing site ${existingSite.siteId} has no endpoint, skipping`
+        );
         return;
     }
 
@@ -217,7 +219,11 @@ export const handleGetConfigMessage: MessageHandler = async (context) => {
     const { tcpTargets, udpTargets } = allSiteResources.reduce(
         (acc, resource) => {
             // Filter out invalid targets
-            if (!resource.proxyPort || !resource.destinationIp || !resource.destinationPort) {
+            if (
+                !resource.proxyPort ||
+                !resource.destinationIp ||
+                !resource.destinationPort
+            ) {
                 return acc;
             }
 

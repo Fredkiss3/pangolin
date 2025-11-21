@@ -21,7 +21,12 @@ import RegenerateCredentialsModal from "@app/components/RegenerateCredentialsMod
 import { build } from "@server/build";
 import { useLicenseStatusContext } from "@app/hooks/useLicenseStatusContext";
 import { useSubscriptionStatusContext } from "@app/hooks/useSubscriptionStatusContext";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@app/components/ui/tooltip";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger
+} from "@app/components/ui/tooltip";
 
 export default function CredentialsPage() {
     const { env } = useEnvContext();
@@ -32,7 +37,8 @@ export default function CredentialsPage() {
     const { client } = useClientContext();
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [clientDefaults, setClientDefaults] = useState<PickClientDefaultsResponse | null>(null);
+    const [clientDefaults, setClientDefaults] =
+        useState<PickClientDefaultsResponse | null>(null);
 
     const { licenseStatus, isUnlocked } = useLicenseStatusContext();
     const subscription = useSubscriptionStatusContext();
@@ -44,18 +50,19 @@ export default function CredentialsPage() {
         return isEnterpriseNotLicensed || isSaasNotSubscribed;
     };
 
-
     const handleConfirmRegenerate = async () => {
-
         const res = await api.get(`/org/${orgId}/pick-client-defaults`);
         if (res && res.status === 200) {
             const data = res.data.data;
             setClientDefaults(data);
 
-            await api.post(`/re-key/${client?.clientId}/regenerate-client-secret`, {
-                olmId: data.olmId,
-                secret: data.olmSecret,
-            });
+            await api.post(
+                `/re-key/${client?.clientId}/regenerate-client-secret`,
+                {
+                    olmId: data.olmId,
+                    secret: data.olmSecret
+                }
+            );
 
             toast({
                 title: t("credentialsSaved"),
@@ -95,7 +102,8 @@ export default function CredentialsPage() {
                                 <div className="inline-block">
                                     <Button
                                         onClick={() => setModalOpen(true)}
-                                        disabled={isSecurityFeatureDisabled()}>
+                                        disabled={isSecurityFeatureDisabled()}
+                                    >
                                         {t("regeneratecredentials")}
                                     </Button>
                                 </div>

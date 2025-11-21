@@ -61,7 +61,9 @@ export default function GeneralPage() {
     const { toast } = useToast();
 
     const [loading, setLoading] = useState(false);
-    const [activeCidrTagIndex, setActiveCidrTagIndex] = useState<number | null>(null);
+    const [activeCidrTagIndex, setActiveCidrTagIndex] = useState<number | null>(
+        null
+    );
 
     const form = useForm({
         resolver: zodResolver(GeneralFormSchema),
@@ -89,8 +91,8 @@ export default function GeneralPage() {
                 dockerSocketEnabled: data.dockerSocketEnabled,
                 remoteSubnets:
                     data.remoteSubnets
-                    ?.map((subnet) => subnet.text)
-                    .join(",") || ""
+                        ?.map((subnet) => subnet.text)
+                        .join(",") || ""
             });
 
             updateSite({
@@ -98,11 +100,15 @@ export default function GeneralPage() {
                 niceId: data.niceId,
                 dockerSocketEnabled: data.dockerSocketEnabled,
                 remoteSubnets:
-                    data.remoteSubnets?.map((subnet) => subnet.text).join(",") || ""
+                    data.remoteSubnets
+                        ?.map((subnet) => subnet.text)
+                        .join(",") || ""
             });
 
             if (data.niceId && data.niceId !== site?.niceId) {
-                router.replace(`/${site?.orgId}/settings/sites/${data.niceId}/general`);
+                router.replace(
+                    `/${site?.orgId}/settings/sites/${data.niceId}/general`
+                );
             }
 
             toast({
@@ -113,7 +119,10 @@ export default function GeneralPage() {
             toast({
                 variant: "destructive",
                 title: t("siteErrorUpdate"),
-                description: formatAxiosError(e, t("siteErrorUpdateDescription"))
+                description: formatAxiosError(
+                    e,
+                    t("siteErrorUpdateDescription")
+                )
             });
         }
 
@@ -161,11 +170,15 @@ export default function GeneralPage() {
                                     name="niceId"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>{t("identifier")}</FormLabel>
+                                            <FormLabel>
+                                                {t("identifier")}
+                                            </FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    placeholder={t("enterIdentifier")}
+                                                    placeholder={t(
+                                                        "enterIdentifier"
+                                                    )}
                                                     className="flex-1"
                                                 />
                                             </FormControl>
@@ -174,7 +187,8 @@ export default function GeneralPage() {
                                     )}
                                 />
 
-                                {env.flags.enableClients && site.type === "newt" ? (
+                                {env.flags.enableClients &&
+                                site.type === "newt" ? (
                                     <FormField
                                         control={form.control}
                                         name="remoteSubnets"

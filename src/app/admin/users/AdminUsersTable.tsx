@@ -238,13 +238,9 @@ export default function UsersTable({ users }: Props) {
                     }}
                     dialog={
                         <div>
-                            <p>
-                                {t("userQuestionRemove")}
-                            </p>
+                            <p>{t("userQuestionRemove")}</p>
 
-                            <p>
-                                {t("userMessageRemove")}
-                            </p>
+                            <p>{t("userMessageRemove")}</p>
                         </div>
                     }
                     buttonText={t("userDeleteConfirm")}

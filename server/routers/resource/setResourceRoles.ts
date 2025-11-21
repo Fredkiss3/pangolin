@@ -11,15 +11,12 @@ import { eq, and, ne } from "drizzle-orm";
 import { OpenAPITags, registry } from "@server/openApi";
 
 const setResourceRolesBodySchema = z.strictObject({
-        roleIds: z.array(z.int().positive())
-    });
+    roleIds: z.array(z.int().positive())
+});
 
 const setResourceRolesParamsSchema = z.strictObject({
-        resourceId: z
-            .string()
-            .transform(Number)
-            .pipe(z.int().positive())
-    });
+    resourceId: z.string().transform(Number).pipe(z.int().positive())
+});
 
 registry.registerPath({
     method: "post",
@@ -91,10 +88,7 @@ export async function setResourceRoles(
             .select()
             .from(roles)
             .where(
-                and(
-                    eq(roles.name, "Admin"),
-                    eq(roles.orgId, resource.orgId)
-                )
+                and(eq(roles.name, "Admin"), eq(roles.orgId, resource.orgId))
             )
             .limit(1);
 
@@ -148,4 +142,3 @@ export async function setResourceRoles(
         );
     }
 }
-

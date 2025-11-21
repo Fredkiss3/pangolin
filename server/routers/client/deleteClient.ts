@@ -11,8 +11,8 @@ import { fromError } from "zod-validation-error";
 import { OpenAPITags, registry } from "@server/openApi";
 
 const deleteClientSchema = z.strictObject({
-        clientId: z.string().transform(Number).pipe(z.int().positive())
-    });
+    clientId: z.string().transform(Number).pipe(z.int().positive())
+});
 
 registry.registerPath({
     method: "delete",
@@ -65,9 +65,7 @@ export async function deleteClient(
                 .where(eq(clientSites.clientId, clientId));
 
             // Then delete the client itself
-            await trx
-                .delete(clients)
-                .where(eq(clients.clientId, clientId));
+            await trx.delete(clients).where(eq(clients.clientId, clientId));
         });
 
         return response(res, {

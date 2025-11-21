@@ -545,7 +545,8 @@ export async function updateProxyResources(
                     if (
                         existingRule.action !== getRuleAction(rule.action) ||
                         existingRule.match !== rule.match.toUpperCase() ||
-                        existingRule.value !== getRuleValue(rule.match.toUpperCase(), rule.value)
+                        existingRule.value !==
+                            getRuleValue(rule.match.toUpperCase(), rule.value)
                     ) {
                         validateRule(rule);
                         await trx
@@ -553,7 +554,10 @@ export async function updateProxyResources(
                             .set({
                                 action: getRuleAction(rule.action),
                                 match: rule.match.toUpperCase(),
-                                value: getRuleValue(rule.match.toUpperCase(), rule.value),
+                                value: getRuleValue(
+                                    rule.match.toUpperCase(),
+                                    rule.value
+                                )
                             })
                             .where(
                                 eq(resourceRules.ruleId, existingRule.ruleId)
@@ -565,7 +569,10 @@ export async function updateProxyResources(
                         resourceId: existingResource.resourceId,
                         action: getRuleAction(rule.action),
                         match: rule.match.toUpperCase(),
-                        value: getRuleValue(rule.match.toUpperCase(), rule.value),
+                        value: getRuleValue(
+                            rule.match.toUpperCase(),
+                            rule.value
+                        ),
                         priority: index + 1 // start priorities at 1
                     });
                 }

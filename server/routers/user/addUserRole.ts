@@ -12,9 +12,9 @@ import stoi from "@server/lib/stoi";
 import { OpenAPITags, registry } from "@server/openApi";
 
 const addUserRoleParamsSchema = z.strictObject({
-        userId: z.string(),
-        roleId: z.string().transform(stoi).pipe(z.number())
-    });
+    userId: z.string(),
+    roleId: z.string().transform(stoi).pipe(z.number())
+});
 
 export type AddUserRoleResponse = z.infer<typeof addUserRoleParamsSchema>;
 
@@ -72,7 +72,9 @@ export async function addUserRole(
         const existingUser = await db
             .select()
             .from(userOrgs)
-            .where(and(eq(userOrgs.userId, userId), eq(userOrgs.orgId, role.orgId)))
+            .where(
+                and(eq(userOrgs.userId, userId), eq(userOrgs.orgId, role.orgId))
+            )
             .limit(1);
 
         if (existingUser.length === 0) {
@@ -111,7 +113,9 @@ export async function addUserRole(
         const newUserRole = await db
             .update(userOrgs)
             .set({ roleId })
-            .where(and(eq(userOrgs.userId, userId), eq(userOrgs.orgId, role.orgId)))
+            .where(
+                and(eq(userOrgs.userId, userId), eq(userOrgs.orgId, role.orgId))
+            )
             .returning();
 
         return response(res, {

@@ -458,10 +458,14 @@ export default function ResourcesTable({
                     >
                         <StatusIcon status={overallStatus} />
                         <span className="text-sm">
-                            {overallStatus === "online" && t("resourcesTableHealthy")}
-                            {overallStatus === "degraded" && t("resourcesTableDegraded")}
-                            {overallStatus === "offline" && t("resourcesTableOffline")}
-                            {overallStatus === "unknown" && t("resourcesTableUnknown")}
+                            {overallStatus === "online" &&
+                                t("resourcesTableHealthy")}
+                            {overallStatus === "degraded" &&
+                                t("resourcesTableDegraded")}
+                            {overallStatus === "offline" &&
+                                t("resourcesTableOffline")}
+                            {overallStatus === "unknown" &&
+                                t("resourcesTableUnknown")}
                         </span>
                         <ChevronDown className="h-3 w-3" />
                     </Button>

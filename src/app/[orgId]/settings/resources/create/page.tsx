@@ -431,16 +431,16 @@ export default function Page() {
 
         const newTarget: LocalTarget = {
             ...data,
-            path: isHttp ? (data.path || null) : null,
-            pathMatchType: isHttp ? (data.pathMatchType || null) : null,
-            rewritePath: isHttp ? (data.rewritePath || null) : null,
-            rewritePathType: isHttp ? (data.rewritePathType || null) : null,
+            path: isHttp ? data.path || null : null,
+            pathMatchType: isHttp ? data.pathMatchType || null : null,
+            rewritePath: isHttp ? data.rewritePath || null : null,
+            rewritePathType: isHttp ? data.rewritePathType || null : null,
             siteType: site?.type || null,
             enabled: true,
             targetId: new Date().getTime(),
             new: true,
             resourceId: 0, // Will be set when resource is created
-            priority: isHttp ? (data.priority || 100) : 100, // Default priority
+            priority: isHttp ? data.priority || 100 : 100, // Default priority
             hcEnabled: false,
             hcPath: null,
             hcMethod: null,
@@ -505,7 +505,7 @@ export default function Page() {
         try {
             const payload = {
                 name: baseData.name,
-                http: baseData.http,
+                http: baseData.http
             };
 
             let sanitizedSubdomain: string | undefined;
@@ -575,7 +575,8 @@ export default function Page() {
                                 hcFollowRedirects:
                                     target.hcFollowRedirects || null,
                                 hcStatus: target.hcStatus || null,
-                                hcUnhealthyInterval: target.hcUnhealthyInterval || null,
+                                hcUnhealthyInterval:
+                                    target.hcUnhealthyInterval || null,
                                 hcMode: target.hcMode || null
                             };
 
@@ -1032,8 +1033,12 @@ export default function Page() {
                                         {row.original.method || "http"}
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="http">http</SelectItem>
-                                        <SelectItem value="https">https</SelectItem>
+                                        <SelectItem value="http">
+                                            http
+                                        </SelectItem>
+                                        <SelectItem value="https">
+                                            https
+                                        </SelectItem>
                                         <SelectItem value="h2c">h2c</SelectItem>
                                     </SelectContent>
                                 </Select>

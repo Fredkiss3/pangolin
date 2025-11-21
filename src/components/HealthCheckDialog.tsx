@@ -80,14 +80,19 @@ export default function HealthCheckDialog({
         hcMethod: z
             .string()
             .min(1, { message: t("healthCheckMethodRequired") }),
-        hcInterval: z.int()
+        hcInterval: z
+            .int()
             .positive()
             .min(5, { message: t("healthCheckIntervalMin") }),
-        hcTimeout: z.int()
+        hcTimeout: z
+            .int()
             .positive()
             .min(1, { message: t("healthCheckTimeoutMin") }),
         hcStatus: z.int().positive().min(100).optional().nullable(),
-        hcHeaders: z.array(z.object({ name: z.string(), value: z.string() })).nullable().optional(),
+        hcHeaders: z
+            .array(z.object({ name: z.string(), value: z.string() }))
+            .nullable()
+            .optional(),
         hcScheme: z.string().optional(),
         hcHostname: z.string(),
         hcPort: z.number().positive().gt(0).lte(65535),
@@ -210,14 +215,20 @@ export default function HealthCheckDialog({
                                                         {t("healthScheme")}
                                                     </FormLabel>
                                                     <Select
-                                                        onValueChange={(value) => {
-                                                            field.onChange(value);
+                                                        onValueChange={(
+                                                            value
+                                                        ) => {
+                                                            field.onChange(
+                                                                value
+                                                            );
                                                             handleFieldChange(
                                                                 "hcScheme",
                                                                 value
                                                             );
                                                         }}
-                                                        defaultValue={field.value}
+                                                        defaultValue={
+                                                            field.value
+                                                        }
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
@@ -544,7 +555,9 @@ export default function HealthCheckDialog({
                                                     <HeadersInput
                                                         value={field.value}
                                                         onChange={(value) => {
-                                                            field.onChange(value);
+                                                            field.onChange(
+                                                                value
+                                                            );
                                                             handleFieldChange(
                                                                 "hcHeaders",
                                                                 value

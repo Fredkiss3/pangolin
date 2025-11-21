@@ -53,7 +53,9 @@ export async function getUniqueResourceName(orgId: string): Promise<string> {
     }
 }
 
-export async function getUniqueSiteResourceName(orgId: string): Promise<string> {
+export async function getUniqueSiteResourceName(
+    orgId: string
+): Promise<string> {
     let loops = 0;
     while (true) {
         if (loops > 100) {
@@ -62,9 +64,17 @@ export async function getUniqueSiteResourceName(orgId: string): Promise<string> 
 
         const name = generateName();
         const count = await db
-            .select({ niceId: siteResources.niceId, orgId: siteResources.orgId })
+            .select({
+                niceId: siteResources.niceId,
+                orgId: siteResources.orgId
+            })
             .from(siteResources)
-            .where(and(eq(siteResources.niceId, name), eq(siteResources.orgId, orgId)));
+            .where(
+                and(
+                    eq(siteResources.niceId, name),
+                    eq(siteResources.orgId, orgId)
+                )
+            );
         if (count.length === 0) {
             return name;
         }
@@ -74,9 +84,7 @@ export async function getUniqueSiteResourceName(orgId: string): Promise<string> 
 
 export async function getUniqueExitNodeEndpointName(): Promise<string> {
     let loops = 0;
-    const count = await db
-        .select()
-        .from(exitNodes);
+    const count = await db.select().from(exitNodes);
     while (true) {
         if (loops > 100) {
             throw new Error("Could not generate a unique name");
@@ -94,7 +102,6 @@ export async function getUniqueExitNodeEndpointName(): Promise<string> {
         return name;
     }
 }
-
 
 export function generateName(): string {
     const name = (

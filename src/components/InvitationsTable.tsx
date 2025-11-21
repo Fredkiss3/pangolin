@@ -176,9 +176,7 @@ export default function InvitationsTable({
                 }}
                 dialog={
                     <div>
-                        <p>
-                            {t("inviteQuestionRemove")}
-                        </p>
+                        <p>{t("inviteQuestionRemove")}</p>
                         <p>{t("inviteMessageRemove")}</p>
                     </div>
                 }

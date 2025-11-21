@@ -15,12 +15,21 @@ import { Button } from "@app/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@app/components/ui/alert";
 import { InfoIcon, AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { InfoSection, InfoSectionContent, InfoSections, InfoSectionTitle } from "@app/components/InfoSection";
+import {
+    InfoSection,
+    InfoSectionContent,
+    InfoSections,
+    InfoSectionTitle
+} from "@app/components/InfoSection";
 import CopyToClipboard from "@app/components/CopyToClipboard";
 import CopyTextBox from "@app/components/CopyTextBox";
 import { QRCodeCanvas } from "qrcode.react";
 
-type CredentialType = "site-wireguard" | "site-newt" | "client-olm" | "remote-exit-node";
+type CredentialType =
+    | "site-wireguard"
+    | "site-newt"
+    | "client-olm"
+    | "remote-exit-node";
 
 interface RegenerateCredentialsModalProps {
     open: boolean;
@@ -102,7 +111,9 @@ export default function RegenerateCredentialsModal({
             <CredenzaContent className="max-h-[80vh] flex flex-col">
                 <CredenzaHeader>
                     <CredenzaTitle>{getTitle()}</CredenzaTitle>
-                    <CredenzaDescription>{getDescription()}</CredenzaDescription>
+                    <CredenzaDescription>
+                        {getDescription()}
+                    </CredenzaDescription>
                 </CredenzaHeader>
 
                 <CredenzaBody className="overflow-y-auto px-4">
@@ -121,7 +132,9 @@ export default function RegenerateCredentialsModal({
                             {credentials?.wgConfig && (
                                 <div className="space-y-4">
                                     <div className="flex flex-col items-center gap-4">
-                                        <CopyTextBox text={credentials.wgConfig} />
+                                        <CopyTextBox
+                                            text={credentials.wgConfig}
+                                        />
                                         <div className="relative w-fit border rounded-md">
                                             <div className="bg-white p-6 rounded-md">
                                                 <QRCodeCanvas
@@ -139,7 +152,9 @@ export default function RegenerateCredentialsModal({
                                             {t("copyandsavethesecredentials")}
                                         </AlertTitle>
                                         <AlertDescription>
-                                            {t("copyandsavethesecredentialsdescription")}
+                                            {t(
+                                                "copyandsavethesecredentialsdescription"
+                                            )}
                                         </AlertDescription>
                                     </Alert>
                                 </div>
@@ -153,7 +168,9 @@ export default function RegenerateCredentialsModal({
                                                 {t("endpoint")}
                                             </InfoSectionTitle>
                                             <InfoSectionContent>
-                                                <CopyToClipboard text={dashboardUrl} />
+                                                <CopyToClipboard
+                                                    text={dashboardUrl}
+                                                />
                                             </InfoSectionContent>
                                         </InfoSection>
                                         <InfoSection>
@@ -161,7 +178,9 @@ export default function RegenerateCredentialsModal({
                                                 {t("Id")}
                                             </InfoSectionTitle>
                                             <InfoSectionContent>
-                                                <CopyToClipboard text={credentials?.Id} />
+                                                <CopyToClipboard
+                                                    text={credentials?.Id}
+                                                />
                                             </InfoSectionContent>
                                         </InfoSection>
                                         <InfoSection>
@@ -169,7 +188,9 @@ export default function RegenerateCredentialsModal({
                                                 {t("SecretKey")}
                                             </InfoSectionTitle>
                                             <InfoSectionContent>
-                                                <CopyToClipboard text={credentials?.Secret} />
+                                                <CopyToClipboard
+                                                    text={credentials?.Secret}
+                                                />
                                             </InfoSectionContent>
                                         </InfoSection>
                                     </InfoSections>
@@ -179,11 +200,12 @@ export default function RegenerateCredentialsModal({
                                             {t("copyandsavethesecredentials")}
                                         </AlertTitle>
                                         <AlertDescription>
-                                            {t("copyandsavethesecredentialsdescription")}
+                                            {t(
+                                                "copyandsavethesecredentialsdescription"
+                                            )}
                                         </AlertDescription>
                                     </Alert>
                                 </div>
-
                             )}
                         </>
                     )}

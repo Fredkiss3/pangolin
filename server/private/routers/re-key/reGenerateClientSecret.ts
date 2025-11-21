@@ -13,7 +13,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { db, olms, } from "@server/db";
+import { db, olms } from "@server/db";
 import { clients } from "@server/db";
 import response from "@server/lib/response";
 import HttpCode from "@server/types/HttpCode";
@@ -25,14 +25,13 @@ import { OpenAPITags, registry } from "@server/openApi";
 import { hashPassword } from "@server/auth/password";
 
 const reGenerateSecretParamsSchema = z.strictObject({
-        clientId: z.string().transform(Number).pipe(z.int().positive())
-    });
+    clientId: z.string().transform(Number).pipe(z.int().positive())
+});
 
 const reGenerateSecretBodySchema = z.strictObject({
-        olmId: z.string().min(1).optional(),
-        secret: z.string().min(1).optional(),
-
-    });
+    olmId: z.string().min(1).optional(),
+    secret: z.string().min(1).optional()
+});
 
 export type ReGenerateSecretBody = z.infer<typeof reGenerateSecretBodySchema>;
 
@@ -53,7 +52,6 @@ registry.registerPath({
     },
     responses: {}
 });
-
 
 export async function reGenerateClientSecret(
     req: Request,
@@ -89,7 +87,6 @@ export async function reGenerateClientSecret(
         if (secret) {
             secretHash = await hashPassword(secret);
         }
-
 
         // Fetch the client to make sure it exists and the user has access to it
         const [client] = await db

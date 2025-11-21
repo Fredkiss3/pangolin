@@ -17,6 +17,6 @@ export async function authCookieHeader() {
         headers: {
             Cookie: `${cookieName}=${sessionId}`,
             ...otherHeadersObject
-        },
+        }
     };
 }

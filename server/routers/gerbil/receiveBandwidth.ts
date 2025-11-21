@@ -130,8 +130,11 @@ export async function updateSiteBandwidth(
             if (calcUsageAndLimits) {
                 // REMOTE EXIT NODES DO NOT COUNT TOWARDS USAGE
                 // Process all usage updates sequentially by organization to reduce deadlock risk
-                const allOrgIds = new Set([...orgUsageMap.keys(), ...orgUptimeMap.keys()]);
-                
+                const allOrgIds = new Set([
+                    ...orgUsageMap.keys(),
+                    ...orgUptimeMap.keys()
+                ]);
+
                 for (const orgId of allOrgIds) {
                     try {
                         // Process bandwidth usage for this org

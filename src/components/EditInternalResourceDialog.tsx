@@ -70,11 +70,22 @@ export default function EditInternalResourceDialog({
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const formSchema = z.object({
-        name: z.string().min(1, t("editInternalResourceDialogNameRequired")).max(255, t("editInternalResourceDialogNameMaxLength")),
+        name: z
+            .string()
+            .min(1, t("editInternalResourceDialogNameRequired"))
+            .max(255, t("editInternalResourceDialogNameMaxLength")),
         protocol: z.enum(["tcp", "udp"]),
-        proxyPort: z.int().positive().min(1, t("editInternalResourceDialogProxyPortMin")).max(65535, t("editInternalResourceDialogProxyPortMax")),
+        proxyPort: z
+            .int()
+            .positive()
+            .min(1, t("editInternalResourceDialogProxyPortMin"))
+            .max(65535, t("editInternalResourceDialogProxyPortMax")),
         destinationIp: z.string(),
-        destinationPort: z.int().positive().min(1, t("editInternalResourceDialogDestinationPortMin")).max(65535, t("editInternalResourceDialogDestinationPortMax"))
+        destinationPort: z
+            .int()
+            .positive()
+            .min(1, t("editInternalResourceDialogDestinationPortMin"))
+            .max(65535, t("editInternalResourceDialogDestinationPortMax"))
     });
 
     type FormData = z.infer<typeof formSchema>;
@@ -106,17 +117,22 @@ export default function EditInternalResourceDialog({
         setIsSubmitting(true);
         try {
             // Update the site resource
-            await api.post(`/org/${orgId}/site/${resource.siteId}/resource/${resource.id}`, {
-                name: data.name,
-                protocol: data.protocol,
-                proxyPort: data.proxyPort,
-                destinationIp: data.destinationIp,
-                destinationPort: data.destinationPort
-            });
+            await api.post(
+                `/org/${orgId}/site/${resource.siteId}/resource/${resource.id}`,
+                {
+                    name: data.name,
+                    protocol: data.protocol,
+                    proxyPort: data.proxyPort,
+                    destinationIp: data.destinationIp,
+                    destinationPort: data.destinationPort
+                }
+            );
 
             toast({
                 title: t("editInternalResourceDialogSuccess"),
-                description: t("editInternalResourceDialogInternalResourceUpdatedSuccessfully"),
+                description: t(
+                    "editInternalResourceDialogInternalResourceUpdatedSuccessfully"
+                ),
                 variant: "default"
             });
 
@@ -126,7 +142,12 @@ export default function EditInternalResourceDialog({
             console.error("Error updating internal resource:", error);
             toast({
                 title: t("editInternalResourceDialogError"),
-                description: formatAxiosError(error, t("editInternalResourceDialogFailedToUpdateInternalResource")),
+                description: formatAxiosError(
+                    error,
+                    t(
+                        "editInternalResourceDialogFailedToUpdateInternalResource"
+                    )
+                ),
                 variant: "destructive"
             });
         } finally {
@@ -138,24 +159,41 @@ export default function EditInternalResourceDialog({
         <Credenza open={open} onOpenChange={setOpen}>
             <CredenzaContent className="max-w-2xl">
                 <CredenzaHeader>
-                    <CredenzaTitle>{t("editInternalResourceDialogEditClientResource")}</CredenzaTitle>
+                    <CredenzaTitle>
+                        {t("editInternalResourceDialogEditClientResource")}
+                    </CredenzaTitle>
                     <CredenzaDescription>
-                        {t("editInternalResourceDialogUpdateResourceProperties", { resourceName: resource.name })}
+                        {t(
+                            "editInternalResourceDialogUpdateResourceProperties",
+                            { resourceName: resource.name }
+                        )}
                     </CredenzaDescription>
                 </CredenzaHeader>
                 <CredenzaBody>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6" id="edit-internal-resource-form">
+                        <form
+                            onSubmit={form.handleSubmit(handleSubmit)}
+                            className="space-y-6"
+                            id="edit-internal-resource-form"
+                        >
                             {/* Resource Properties Form */}
                             <div>
-                                <h3 className="text-lg font-semibold mb-4">{t("editInternalResourceDialogResourceProperties")}</h3>
+                                <h3 className="text-lg font-semibold mb-4">
+                                    {t(
+                                        "editInternalResourceDialogResourceProperties"
+                                    )}
+                                </h3>
                                 <div className="space-y-4">
                                     <FormField
                                         control={form.control}
                                         name="name"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>{t("editInternalResourceDialogName")}</FormLabel>
+                                                <FormLabel>
+                                                    {t(
+                                                        "editInternalResourceDialogName"
+                                                    )}
+                                                </FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -170,9 +208,15 @@ export default function EditInternalResourceDialog({
                                             name="protocol"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>{t("editInternalResourceDialogProtocol")}</FormLabel>
+                                                    <FormLabel>
+                                                        {t(
+                                                            "editInternalResourceDialogProtocol"
+                                                        )}
+                                                    </FormLabel>
                                                     <Select
-                                                        onValueChange={field.onChange}
+                                                        onValueChange={
+                                                            field.onChange
+                                                        }
                                                         value={field.value}
                                                     >
                                                         <FormControl>
@@ -181,8 +225,12 @@ export default function EditInternalResourceDialog({
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
-                                                            <SelectItem value="tcp">TCP</SelectItem>
-                                                            <SelectItem value="udp">UDP</SelectItem>
+                                                            <SelectItem value="tcp">
+                                                                TCP
+                                                            </SelectItem>
+                                                            <SelectItem value="udp">
+                                                                UDP
+                                                            </SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                     <FormMessage />
@@ -195,12 +243,23 @@ export default function EditInternalResourceDialog({
                                             name="proxyPort"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>{t("editInternalResourceDialogSitePort")}</FormLabel>
+                                                    <FormLabel>
+                                                        {t(
+                                                            "editInternalResourceDialogSitePort"
+                                                        )}
+                                                    </FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             type="number"
                                                             {...field}
-                                                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                                                            onChange={(e) =>
+                                                                field.onChange(
+                                                                    parseInt(
+                                                                        e.target
+                                                                            .value
+                                                                    ) || 0
+                                                                )
+                                                            }
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -213,7 +272,11 @@ export default function EditInternalResourceDialog({
 
                             {/* Target Configuration Form */}
                             <div>
-                                <h3 className="text-lg font-semibold mb-4">{t("editInternalResourceDialogTargetConfiguration")}</h3>
+                                <h3 className="text-lg font-semibold mb-4">
+                                    {t(
+                                        "editInternalResourceDialogTargetConfiguration"
+                                    )}
+                                </h3>
                                 <div className="space-y-4">
                                     <div className="grid grid-cols-2 gap-4">
                                         <FormField
@@ -221,7 +284,9 @@ export default function EditInternalResourceDialog({
                                             name="destinationIp"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>{t("targetAddr")}</FormLabel>
+                                                    <FormLabel>
+                                                        {t("targetAddr")}
+                                                    </FormLabel>
                                                     <FormControl>
                                                         <Input {...field} />
                                                     </FormControl>
@@ -235,12 +300,21 @@ export default function EditInternalResourceDialog({
                                             name="destinationPort"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>{t("targetPort")}</FormLabel>
+                                                    <FormLabel>
+                                                        {t("targetPort")}
+                                                    </FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             type="number"
                                                             {...field}
-                                                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                                                            onChange={(e) =>
+                                                                field.onChange(
+                                                                    parseInt(
+                                                                        e.target
+                                                                            .value
+                                                                    ) || 0
+                                                                )
+                                                            }
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -267,7 +341,7 @@ export default function EditInternalResourceDialog({
                         disabled={isSubmitting}
                         loading={isSubmitting}
                     >
-                         {t("editInternalResourceDialogSaveResource")}
+                        {t("editInternalResourceDialogSaveResource")}
                     </Button>
                 </CredenzaFooter>
             </CredenzaContent>

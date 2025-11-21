@@ -19,7 +19,7 @@ import { OpenAPITags, registry } from "@server/openApi";
 import NodeCache from "node-cache";
 import semver from "semver";
 
-const olmVersionCache = new NodeCache({ stdTTL: 3600 }); 
+const olmVersionCache = new NodeCache({ stdTTL: 3600 });
 
 async function getLatestOlmVersion(): Promise<string | null> {
     try {
@@ -29,7 +29,7 @@ async function getLatestOlmVersion(): Promise<string | null> {
         }
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1500); 
+        const timeoutId = setTimeout(() => controller.abort(), 1500);
 
         const response = await fetch(
             "https://api.github.com/repos/fosrl/olm/tags",
@@ -60,13 +60,9 @@ async function getLatestOlmVersion(): Promise<string | null> {
         return latestVersion;
     } catch (error: any) {
         if (error.name === "AbortError") {
-            logger.warn(
-                "Request to fetch latest Olm version timed out (1.5s)"
-            );
+            logger.warn("Request to fetch latest Olm version timed out (1.5s)");
         } else if (error.cause?.code === "UND_ERR_CONNECT_TIMEOUT") {
-            logger.warn(
-                "Connection timeout while fetching latest Olm version"
-            );
+            logger.warn("Connection timeout while fetching latest Olm version");
         } else {
             logger.warn(
                 "Error fetching latest Olm version:",
@@ -77,10 +73,9 @@ async function getLatestOlmVersion(): Promise<string | null> {
     }
 }
 
-
 const listClientsParamsSchema = z.strictObject({
-        orgId: z.string()
-    });
+    orgId: z.string()
+});
 
 const listClientsSchema = z.object({
     limit: z
@@ -142,16 +137,17 @@ type OlmWithUpdateAvailable = Awaited<ReturnType<typeof queryClients>>[0] & {
     olmUpdateAvailable?: boolean;
 };
 
-
 export type ListClientsResponse = {
-    clients: Array<Awaited<ReturnType<typeof queryClients>>[0] & {
-        sites: Array<{
-            siteId: number;
-            siteName: string | null;
-            siteNiceId: string | null;
-        }>
-        olmUpdateAvailable?: boolean;
-    }>;
+    clients: Array<
+        Awaited<ReturnType<typeof queryClients>>[0] & {
+            sites: Array<{
+                siteId: number;
+                siteName: string | null;
+                siteNiceId: string | null;
+            }>;
+            olmUpdateAvailable?: boolean;
+        }
+    >;
     pagination: { total: number; limit: number; offset: number };
 };
 
@@ -249,28 +245,34 @@ export async function listClients(
         const totalCount = totalCountResult[0].count;
 
         // Get associated sites for all clients
-        const clientIds = clientsList.map(client => client.clientId);
+        const clientIds = clientsList.map((client) => client.clientId);
         const siteAssociations = await getSiteAssociations(clientIds);
 
         // Group site associations by client ID
-        const sitesByClient = siteAssociations.reduce((acc, association) => {
-            if (!acc[association.clientId]) {
-                acc[association.clientId] = [];
-            }
-            acc[association.clientId].push({
-                siteId: association.siteId,
-                siteName: association.siteName,
-                siteNiceId: association.siteNiceId
-            });
-            return acc;
-        }, {} as Record<number, Array<{
-            siteId: number;
-            siteName: string | null;
-            siteNiceId: string | null;
-        }>>);
+        const sitesByClient = siteAssociations.reduce(
+            (acc, association) => {
+                if (!acc[association.clientId]) {
+                    acc[association.clientId] = [];
+                }
+                acc[association.clientId].push({
+                    siteId: association.siteId,
+                    siteName: association.siteName,
+                    siteNiceId: association.siteNiceId
+                });
+                return acc;
+            },
+            {} as Record<
+                number,
+                Array<{
+                    siteId: number;
+                    siteName: string | null;
+                    siteNiceId: string | null;
+                }>
+            >
+        );
 
         // Merge clients with their site associations
-        const clientsWithSites = clientsList.map(client => ({
+        const clientsWithSites = clientsList.map((client) => ({
             ...client,
             sites: sitesByClient[client.clientId] || []
         }));
@@ -300,7 +302,6 @@ export async function listClients(
                     } catch (error) {
                         client.olmUpdateAvailable = false;
                     }
-
                 });
             }
         } catch (error) {
@@ -310,7 +311,6 @@ export async function listClients(
                 error
             );
         }
-
 
         return response<ListClientsResponse>(res, {
             data: {

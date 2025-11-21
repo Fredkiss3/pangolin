@@ -145,7 +145,9 @@ export const handleOlmRegisterMessage: MessageHandler = async (context) => {
 
         // Validate endpoint and hole punch status
         if (!site.endpoint) {
-            logger.warn(`In olm register: site ${site.siteId} has no endpoint, skipping`);
+            logger.warn(
+                `In olm register: site ${site.siteId} has no endpoint, skipping`
+            );
             continue;
         }
 

@@ -1,13 +1,7 @@
-import {
-    SiteResource,
-    siteResources,
-    Transaction,
-} from "@server/db";
+import { SiteResource, siteResources, Transaction } from "@server/db";
 import { sites } from "@server/db";
 import { eq, and } from "drizzle-orm";
-import {
-    Config,
-} from "./types";
+import { Config } from "./types";
 import logger from "@server/logger";
 
 export type ClientResourcesResults = {
@@ -88,7 +82,7 @@ export async function updateClientResources(
                 )
                 .returning();
 
-                results.push({ resource: updatedResource });
+            results.push({ resource: updatedResource });
         } else {
             // Create new resource
             const [newResource] = await trx

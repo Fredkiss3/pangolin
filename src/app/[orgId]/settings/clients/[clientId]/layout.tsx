@@ -13,7 +13,7 @@ import { build } from "@server/build";
 type SettingsLayoutProps = {
     children: React.ReactNode;
     params: Promise<{ clientId: number | string; orgId: string }>;
-}
+};
 
 export default async function SettingsLayout(props: SettingsLayoutProps) {
     const params = await props.params;
@@ -36,16 +36,17 @@ export default async function SettingsLayout(props: SettingsLayoutProps) {
 
     const navItems = [
         {
-            title: t('general'),
+            title: t("general"),
             href: `/{orgId}/settings/clients/{clientId}/general`
         },
-        ...(build === 'enterprise'
-            ? [{
-                title: t('credentials'),
-                href: `/{orgId}/settings/clients/{clientId}/credentials`
-            },
-            ]
-            : []),
+        ...(build === "enterprise"
+            ? [
+                  {
+                      title: t("credentials"),
+                      href: `/{orgId}/settings/clients/{clientId}/credentials`
+                  }
+              ]
+            : [])
     ];
 
     return (
@@ -58,9 +59,7 @@ export default async function SettingsLayout(props: SettingsLayoutProps) {
             <ClientProvider client={client}>
                 <div className="space-y-6">
                     <ClientInfoCard />
-                    <HorizontalTabs items={navItems}>
-                        {children}
-                    </HorizontalTabs>
+                    <HorizontalTabs items={navItems}>{children}</HorizontalTabs>
                 </div>
             </ClientProvider>
         </>

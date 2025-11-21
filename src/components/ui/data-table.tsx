@@ -34,14 +34,14 @@ import { Tabs, TabsList, TabsTrigger } from "@app/components/ui/tabs";
 import { useTranslations } from "next-intl";
 
 const STORAGE_KEYS = {
-    PAGE_SIZE: 'datatable-page-size',
-    getTablePageSize: (tableId?: string) => 
+    PAGE_SIZE: "datatable-page-size",
+    getTablePageSize: (tableId?: string) =>
         tableId ? `${tableId}-size` : STORAGE_KEYS.PAGE_SIZE
 };
 
 const getStoredPageSize = (tableId?: string, defaultSize = 20): number => {
-    if (typeof window === 'undefined') return defaultSize;
-    
+    if (typeof window === "undefined") return defaultSize;
+
     try {
         const key = STORAGE_KEYS.getTablePageSize(tableId);
         const stored = localStorage.getItem(key);
@@ -53,19 +53,19 @@ const getStoredPageSize = (tableId?: string, defaultSize = 20): number => {
             }
         }
     } catch (error) {
-        console.warn('Failed to read page size from localStorage:', error);
+        console.warn("Failed to read page size from localStorage:", error);
     }
     return defaultSize;
 };
 
 const setStoredPageSize = (pageSize: number, tableId?: string): void => {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     try {
         const key = STORAGE_KEYS.getTablePageSize(tableId);
         localStorage.setItem(key, pageSize.toString());
     } catch (error) {
-        console.warn('Failed to save page size to localStorage:', error);
+        console.warn("Failed to save page size to localStorage:", error);
     }
 };
 
@@ -112,10 +112,11 @@ export function DataTable<TData, TValue>({
     defaultPageSize = 20
 }: DataTableProps<TData, TValue>) {
     const t = useTranslations();
-    
+
     // Determine table identifier for storage
-    const tableId = typeof persistPageSize === 'string' ? persistPageSize : undefined;
-    
+    const tableId =
+        typeof persistPageSize === "string" ? persistPageSize : undefined;
+
     // Initialize page size from storage or default
     const [pageSize, setPageSize] = useState<number>(() => {
         if (persistPageSize) {
@@ -123,7 +124,7 @@ export function DataTable<TData, TValue>({
         }
         return defaultPageSize;
     });
-    
+
     const [sorting, setSorting] = useState<SortingState>(
         defaultSort ? [defaultSort] : []
     );
@@ -174,7 +175,7 @@ export function DataTable<TData, TValue>({
         const currentPageSize = table.getState().pagination.pageSize;
         if (currentPageSize !== pageSize) {
             table.setPageSize(pageSize);
-            
+
             // Persist to localStorage if enabled
             if (persistPageSize) {
                 setStoredPageSize(pageSize, tableId);
@@ -192,7 +193,7 @@ export function DataTable<TData, TValue>({
     const handlePageSizeChange = (newPageSize: number) => {
         setPageSize(newPageSize);
         table.setPageSize(newPageSize);
-        
+
         // Persist immediately when changed
         if (persistPageSize) {
             setStoredPageSize(newPageSize, tableId);
@@ -309,8 +310,8 @@ export function DataTable<TData, TValue>({
                         </TableBody>
                     </Table>
                     <div className="mt-4">
-                        <DataTablePagination 
-                            table={table} 
+                        <DataTablePagination
+                            table={table}
                             onPageSizeChange={handlePageSizeChange}
                         />
                     </div>

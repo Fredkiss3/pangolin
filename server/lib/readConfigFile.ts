@@ -14,7 +14,8 @@ export const configSchema = z
     .object({
         app: z
             .object({
-                dashboard_url: z.url()
+                dashboard_url: z
+                    .url()
                     .pipe(z.url())
                     .transform((url) => url.toLowerCase())
                     .optional(),

@@ -142,7 +142,9 @@ export default function OrgApiKeysTable({
                                         setSelected(r);
                                     }}
                                 >
-                                    <Link href={`/${orgId}/settings/api-keys/${r.id}`}>
+                                    <Link
+                                        href={`/${orgId}/settings/api-keys/${r.id}`}
+                                    >
                                         {t("viewSettings")}
                                     </Link>
                                 </DropdownMenuItem>
@@ -186,13 +188,9 @@ export default function OrgApiKeysTable({
                     }}
                     dialog={
                         <div>
-                            <p>
-                                {t("apiKeysQuestionRemove")}
-                            </p>
+                            <p>{t("apiKeysQuestionRemove")}</p>
 
-                            <p>
-                                {t("apiKeysMessageRemove")}
-                            </p>
+                            <p>{t("apiKeysMessageRemove")}</p>
                         </div>
                     }
                     buttonText={t("apiKeysDeleteConfirm")}

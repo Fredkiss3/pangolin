@@ -16,7 +16,11 @@ export const TargetHealthCheckSchema = z.object({
     "unhealthy-interval": z.int().default(30),
     unhealthyInterval: z.int().optional(), // deprecated alias
     timeout: z.int().default(5),
-    headers: z.array(z.object({ name: z.string(), value: z.string() })).nullable().optional().default(null),
+    headers: z
+        .array(z.object({ name: z.string(), value: z.string() }))
+        .nullable()
+        .optional()
+        .default(null),
     "follow-redirects": z.boolean().default(true),
     followRedirects: z.boolean().optional(), // deprecated alias
     method: z.string().default("GET"),
@@ -36,7 +40,10 @@ export const TargetSchema = z.object({
     healthcheck: TargetHealthCheckSchema.optional(),
     rewritePath: z.string().optional(), // deprecated alias
     "rewrite-path": z.string().optional(),
-    "rewrite-match": z.enum(["exact", "prefix", "regex", "stripPrefix"]).optional().nullable(),
+    "rewrite-match": z
+        .enum(["exact", "prefix", "regex", "stripPrefix"])
+        .optional()
+        .nullable(),
     priority: z.int().min(1).max(1000).optional().default(100)
 });
 export type TargetData = z.infer<typeof TargetSchema>;
@@ -45,10 +52,12 @@ export const AuthSchema = z.object({
     // pincode has to have 6 digits
     pincode: z.number().min(100000).max(999999).optional(),
     password: z.string().min(1).optional(),
-    "basic-auth": z.object({
-        user: z.string().min(1),
-        password: z.string().min(1)
-    }).optional(),
+    "basic-auth": z
+        .object({
+            user: z.string().min(1),
+            password: z.string().min(1)
+        })
+        .optional(),
     "sso-enabled": z.boolean().optional().default(false),
     "sso-roles": z
         .array(z.string())
@@ -58,7 +67,7 @@ export const AuthSchema = z.object({
             error: "Admin role cannot be included in sso-roles"
         }),
     "sso-users": z.array(z.email()).optional().default([]),
-    "whitelist-users": z.array(z.email()).optional().default([]),
+    "whitelist-users": z.array(z.email()).optional().default([])
 });
 
 export const RuleSchema = z.object({
@@ -121,7 +130,6 @@ export const ResourceSchema = z
         {
             path: ["targets"],
             error: "When protocol is 'http', all targets must have a 'method' field"
-
         }
     )
     .refine(
@@ -208,7 +216,7 @@ export const ClientResourceSchema = z.object({
     site: z.string().min(2).max(100).optional(),
     protocol: z.enum(["tcp", "udp"]),
     "proxy-port": z.number().min(1).max(65535),
-    "hostname": z.string().min(1).max(255),
+    hostname: z.string().min(1).max(255),
     "internal-port": z.number().min(1).max(65535),
     enabled: z.boolean().optional().default(true)
 });
@@ -216,8 +224,14 @@ export const ClientResourceSchema = z.object({
 // Schema for the entire configuration object
 export const ConfigSchema = z
     .object({
-        "proxy-resources": z.record(z.string(), ResourceSchema).optional().prefault({}),
-        "client-resources": z.record(z.string(), ClientResourceSchema).optional().prefault({}),
+        "proxy-resources": z
+            .record(z.string(), ResourceSchema)
+            .optional()
+            .prefault({}),
+        "client-resources": z
+            .record(z.string(), ClientResourceSchema)
+            .optional()
+            .prefault({}),
         sites: z.record(z.string(), SiteSchema).optional().prefault({})
     })
     .refine(
@@ -277,12 +291,10 @@ export const ConfigSchema = z
 
             const duplicates = Array.from(protocolPortMap.entries())
                 .filter(([_, resourceKeys]) => resourceKeys.length > 1)
-                .map(
-                    ([protocolPort, resourceKeys]) => {
-                        const [protocol, port] = protocolPort.split(':');
-                        return `${protocol.toUpperCase()} port ${port} used by proxy-resources: ${resourceKeys.join(", ")}`;
-                    }
-                )
+                .map(([protocolPort, resourceKeys]) => {
+                    const [protocol, port] = protocolPort.split(":");
+                    return `${protocol.toUpperCase()} port ${port} used by proxy-resources: ${resourceKeys.join(", ")}`;
+                })
                 .join("; ");
 
             if (duplicates.length !== 0) {

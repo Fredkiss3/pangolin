@@ -12,10 +12,10 @@ import { OpenAPITags, registry } from "@server/openApi";
 import { removeTargets } from "../client/targets";
 
 const deleteSiteResourceParamsSchema = z.strictObject({
-        siteResourceId: z.string().transform(Number).pipe(z.int().positive()),
-        siteId: z.string().transform(Number).pipe(z.int().positive()),
-        orgId: z.string()
-    });
+    siteResourceId: z.string().transform(Number).pipe(z.int().positive()),
+    siteId: z.string().transform(Number).pipe(z.int().positive()),
+    orgId: z.string()
+});
 
 export type DeleteSiteResourceResponse = {
     message: string;
@@ -38,7 +38,9 @@ export async function deleteSiteResource(
     next: NextFunction
 ): Promise<any> {
     try {
-        const parsedParams = deleteSiteResourceParamsSchema.safeParse(req.params);
+        const parsedParams = deleteSiteResourceParamsSchema.safeParse(
+            req.params
+        );
         if (!parsedParams.success) {
             return next(
                 createHttpError(
@@ -64,30 +66,31 @@ export async function deleteSiteResource(
         const [existingSiteResource] = await db
             .select()
             .from(siteResources)
-            .where(and(
-                eq(siteResources.siteResourceId, siteResourceId),
-                eq(siteResources.siteId, siteId),
-                eq(siteResources.orgId, orgId)
-            ))
+            .where(
+                and(
+                    eq(siteResources.siteResourceId, siteResourceId),
+                    eq(siteResources.siteId, siteId),
+                    eq(siteResources.orgId, orgId)
+                )
+            )
             .limit(1);
 
         if (!existingSiteResource) {
             return next(
-                createHttpError(
-                    HttpCode.NOT_FOUND,
-                    "Site resource not found"
-                )
+                createHttpError(HttpCode.NOT_FOUND, "Site resource not found")
             );
         }
 
         // Delete the site resource
         await db
             .delete(siteResources)
-            .where(and(
-                eq(siteResources.siteResourceId, siteResourceId),
-                eq(siteResources.siteId, siteId),
-                eq(siteResources.orgId, orgId)
-            ));
+            .where(
+                and(
+                    eq(siteResources.siteResourceId, siteResourceId),
+                    eq(siteResources.siteId, siteId),
+                    eq(siteResources.orgId, orgId)
+                )
+            );
 
         const [newt] = await db
             .select()
@@ -107,7 +110,9 @@ export async function deleteSiteResource(
             existingSiteResource.proxyPort
         );
 
-        logger.info(`Deleted site resource ${siteResourceId} for site ${siteId}`);
+        logger.info(
+            `Deleted site resource ${siteResourceId} for site ${siteId}`
+        );
 
         return response(res, {
             data: { message: "Site resource deleted successfully" },
@@ -118,6 +123,11 @@ export async function deleteSiteResource(
         });
     } catch (error) {
         logger.error("Error deleting site resource:", error);
-        return next(createHttpError(HttpCode.INTERNAL_SERVER_ERROR, "Failed to delete site resource"));
+        return next(
+            createHttpError(
+                HttpCode.INTERNAL_SERVER_ERROR,
+                "Failed to delete site resource"
+            )
+        );
     }
 }

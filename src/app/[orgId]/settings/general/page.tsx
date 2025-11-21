@@ -600,7 +600,7 @@ export default function GeneralPage() {
                             </SettingsSectionHeader>
                             <SettingsSectionBody>
                                 <SettingsSectionForm>
-                                <SecurityFeaturesAlert />
+                                    <SecurityFeaturesAlert />
                                     <FormField
                                         control={form.control}
                                         name="requireTwoFactor"

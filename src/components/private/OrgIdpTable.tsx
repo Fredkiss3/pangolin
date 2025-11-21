@@ -58,7 +58,6 @@ export default function IdpTable({ idps, orgId }: Props) {
         }
     };
 
-
     const columns: ColumnDef<IdpRow>[] = [
         {
             accessorKey: "idpId",
@@ -110,9 +109,7 @@ export default function IdpTable({ idps, orgId }: Props) {
             cell: ({ row }) => {
                 const type = row.original.type;
                 const variant = row.original.variant;
-                return (
-                    <IdpTypeBadge type={type} variant={variant} />
-                );
+                return <IdpTypeBadge type={type} variant={variant} />;
             }
         },
         {
@@ -151,7 +148,9 @@ export default function IdpTable({ idps, orgId }: Props) {
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
-                        <Link href={`/${orgId}/settings/idp/${siteRow.idpId}/general`}>
+                        <Link
+                            href={`/${orgId}/settings/idp/${siteRow.idpId}/general`}
+                        >
                             <Button
                                 variant={"secondary"}
                                 className="ml-2"
@@ -178,12 +177,8 @@ export default function IdpTable({ idps, orgId }: Props) {
                     }}
                     dialog={
                         <div>
-                            <p>
-                                {t("idpQuestionRemove")}
-                            </p>
-                            <p>
-                                {t("idpMessageRemove")}
-                            </p>
+                            <p>{t("idpQuestionRemove")}</p>
+                            <p>{t("idpMessageRemove")}</p>
                         </div>
                     }
                     buttonText={t("idpConfirmDelete")}

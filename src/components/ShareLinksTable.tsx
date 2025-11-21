@@ -121,7 +121,9 @@ export default function ShareLinksTable({
             cell: ({ row }) => {
                 const r = row.original;
                 return (
-                    <Link href={`/${orgId}/settings/resources/${r.resourceNiceId}`}>
+                    <Link
+                        href={`/${orgId}/settings/resources/${r.resourceNiceId}`}
+                    >
                         <Button variant="outline" size="sm">
                             {r.resourceName}
                             <ArrowUpRight className="ml-2 h-4 w-4" />

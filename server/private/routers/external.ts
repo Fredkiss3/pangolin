@@ -31,7 +31,7 @@ import {
     verifyUserIsServerAdmin,
     verifySiteAccess,
     verifyClientAccess,
-    verifyClientsEnabled,
+    verifyClientsEnabled
 } from "@server/middlewares";
 import { ActionsEnum } from "@server/auth/actions";
 import {

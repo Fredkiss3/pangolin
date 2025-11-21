@@ -9,7 +9,7 @@ export type CreateRemoteExitNodeResponse = {
 export type UpdateRemoteExitNodeResponse = {
     remoteExitNodeId: string;
     secret: string;
-}
+};
 
 export type PickRemoteExitNodeDefaultsResponse = {
     remoteExitNodeId: string;
@@ -36,4 +36,14 @@ export type ListRemoteExitNodesResponse = {
     pagination: { total: number; limit: number; offset: number };
 };
 
-export type GetRemoteExitNodeResponse = { remoteExitNodeId: string; dateCreated: string; version: string | null; exitNodeId: number | null; name: string; address: string; endpoint: string; online: boolean; type: string | null; }
+export type GetRemoteExitNodeResponse = {
+    remoteExitNodeId: string;
+    dateCreated: string;
+    version: string | null;
+    exitNodeId: number | null;
+    name: string;
+    address: string;
+    endpoint: string;
+    online: boolean;
+    type: string | null;
+};

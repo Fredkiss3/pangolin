@@ -49,7 +49,10 @@ const STORAGE_KEYS = {
         tableId ? `${tableId}-size` : STORAGE_KEYS.PAGE_SIZE
 };
 
-export const getStoredPageSize = (tableId?: string, defaultSize = 20): number => {
+export const getStoredPageSize = (
+    tableId?: string,
+    defaultSize = 20
+): number => {
     if (typeof window === "undefined") return defaultSize;
 
     try {
@@ -145,7 +148,7 @@ export function LogDataTable<TData, TValue>({
     onPageSizeChange: onPageSizeChangeProp,
     isLoading = false,
     expandable = false,
-    disabled=false,
+    disabled = false,
     renderExpandedRow
 }: DataTableProps<TData, TValue>) {
     const t = useTranslations();
@@ -309,7 +312,7 @@ export function LogDataTable<TData, TValue>({
 
     const handleTabChange = (value: string) => {
         if (disabled) return;
-        
+
         setActiveTab(value);
         // Reset to first page when changing tabs
         table.setPageIndex(0);
@@ -318,7 +321,7 @@ export function LogDataTable<TData, TValue>({
     // Enhanced pagination component that updates our local state
     const handlePageSizeChange = (newPageSize: number) => {
         if (disabled) return;
-        
+
         // setPageSize(newPageSize);
         table.setPageSize(newPageSize);
 
@@ -336,7 +339,7 @@ export function LogDataTable<TData, TValue>({
     // Handle page changes for server pagination
     const handlePageChange = (newPageIndex: number) => {
         if (disabled) return;
-        
+
         if (isServerPagination && onPageChange) {
             onPageChange(newPageIndex);
         }
@@ -347,7 +350,7 @@ export function LogDataTable<TData, TValue>({
         end: DateTimeValue
     ) => {
         if (disabled) return;
-        
+
         setStartDate(start);
         setEndDate(end);
         onDateRangeChange?.(start, end);
@@ -393,7 +396,10 @@ export function LogDataTable<TData, TValue>({
                             </Button>
                         )}
                         {onExport && (
-                            <Button onClick={() => !disabled && onExport()} disabled={isExporting || disabled}>
+                            <Button
+                                onClick={() => !disabled && onExport()}
+                                disabled={isExporting || disabled}
+                            >
                                 <Download
                                     className={`mr-2 h-4 w-4 ${isExporting ? "animate-spin" : ""}`}
                                 />
@@ -423,61 +429,63 @@ export function LogDataTable<TData, TValue>({
                         </TableHeader>
                         <TableBody>
                             {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => {
-                                    const isExpanded =
-                                        expandable && expandedRows.has(row.id);
-                                    return [
-                                        <TableRow
-                                            key={row.id}
-                                            data-state={
-                                                row.getIsSelected() &&
-                                                "selected"
-                                            }
-                                            onClick={() =>
-                                                expandable && !disabled
-                                                    ? toggleRowExpansion(
-                                                          row.id
-                                                      )
-                                                    : undefined
-                                            }
-                                            className="text-xs" // made smaller
-                                        >
-                                            {row
-                                                .getVisibleCells()
-                                                .map((cell) => {
-                                                    const originalRow =
-                                                        row.original as any;
-                                                    const actionValue =
-                                                        originalRow?.action;
-                                                    let className = "";
+                                table
+                                    .getRowModel()
+                                    .rows.map((row) => {
+                                        const isExpanded =
+                                            expandable &&
+                                            expandedRows.has(row.id);
+                                        return [
+                                            <TableRow
+                                                key={row.id}
+                                                data-state={
+                                                    row.getIsSelected() &&
+                                                    "selected"
+                                                }
+                                                onClick={() =>
+                                                    expandable && !disabled
+                                                        ? toggleRowExpansion(
+                                                              row.id
+                                                          )
+                                                        : undefined
+                                                }
+                                                className="text-xs" // made smaller
+                                            >
+                                                {row
+                                                    .getVisibleCells()
+                                                    .map((cell) => {
+                                                        const originalRow =
+                                                            row.original as any;
+                                                        const actionValue =
+                                                            originalRow?.action;
+                                                        let className = "";
 
-                                                    if (
-                                                        typeof actionValue ===
-                                                        "boolean"
-                                                    ) {
-                                                        className =
-                                                            actionValue
-                                                                ? "bg-green-100 dark:bg-green-900/50"
-                                                                : "bg-red-100 dark:bg-red-900/50";
-                                                    }
+                                                        if (
+                                                            typeof actionValue ===
+                                                            "boolean"
+                                                        ) {
+                                                            className =
+                                                                actionValue
+                                                                    ? "bg-green-100 dark:bg-green-900/50"
+                                                                    : "bg-red-100 dark:bg-red-900/50";
+                                                        }
 
-                                                    return (
-                                                        <TableCell
-                                                            key={cell.id}
-                                                            className={`${className} py-2`} // made smaller
-                                                        >
-                                                            {flexRender(
-                                                                cell.column
-                                                                    .columnDef
-                                                                    .cell,
-                                                                cell.getContext()
-                                                            )}
-                                                        </TableCell>
-                                                    );
-                                                })}
-                                        </TableRow>,
-                                        isExpanded &&
-                                            renderExpandedRow && (
+                                                        return (
+                                                            <TableCell
+                                                                key={cell.id}
+                                                                className={`${className} py-2`} // made smaller
+                                                            >
+                                                                {flexRender(
+                                                                    cell.column
+                                                                        .columnDef
+                                                                        .cell,
+                                                                    cell.getContext()
+                                                                )}
+                                                            </TableCell>
+                                                        );
+                                                    })}
+                                            </TableRow>,
+                                            isExpanded && renderExpandedRow && (
                                                 <TableRow
                                                     key={`${row.id}-expanded`}
                                                 >
@@ -493,8 +501,9 @@ export function LogDataTable<TData, TValue>({
                                                     </TableCell>
                                                 </TableRow>
                                             )
-                                    ].filter(Boolean);
-                                }).flat()
+                                        ].filter(Boolean);
+                                    })
+                                    .flat()
                             ) : (
                                 <TableRow>
                                     <TableCell

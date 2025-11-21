@@ -27,7 +27,7 @@ export const messageHandlers: Record<string, MessageHandler> = {
     "newt/socket/containers": handleDockerContainersMessage,
     "newt/ping/request": handleNewtPingRequestMessage,
     "newt/blueprint/apply": handleApplyBlueprintMessage,
-    "newt/healthcheck/status": handleHealthcheckStatusMessage,
+    "newt/healthcheck/status": handleHealthcheckStatusMessage
 };
 
 startOlmOfflineChecker(); // this is to handle the offline check for olms

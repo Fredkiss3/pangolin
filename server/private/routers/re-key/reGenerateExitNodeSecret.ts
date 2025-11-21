@@ -30,10 +30,9 @@ export const paramsSchema = z.object({
 });
 
 const bodySchema = z.strictObject({
-        remoteExitNodeId: z.string().length(15),
-        secret: z.string().length(48)
-    });
-
+    remoteExitNodeId: z.string().length(15),
+    secret: z.string().length(48)
+});
 
 registry.registerPath({
     method: "post",
@@ -94,7 +93,10 @@ export async function reGenerateExitNodeSecret(
 
         if (!existingRemoteExitNode) {
             return next(
-                createHttpError(HttpCode.NOT_FOUND, "Remote Exit Node does not exist")
+                createHttpError(
+                    HttpCode.NOT_FOUND,
+                    "Remote Exit Node does not exist"
+                )
             );
         }
 
@@ -108,12 +110,12 @@ export async function reGenerateExitNodeSecret(
         return response<UpdateRemoteExitNodeResponse>(res, {
             data: {
                 remoteExitNodeId,
-                secret,
+                secret
             },
             success: true,
             error: false,
             message: "Remote Exit Node secret updated successfully",
-            status: HttpCode.OK,
+            status: HttpCode.OK
         });
     } catch (e) {
         logger.error("Failed to update remoteExitNode", e);

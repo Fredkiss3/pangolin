@@ -20,10 +20,7 @@ type Props = {
     type: string | null;
 };
 
-export default function DNSRecordsTable({
-    records,
-    type
-}: Props) {
+export default function DNSRecordsTable({ records, type }: Props) {
     const t = useTranslations();
     const env = useEnvContext();
 
@@ -109,11 +106,5 @@ export default function DNSRecordsTable({
         ...(env.env.flags.usePangolinDns ? [statusColumn] : [])
     ];
 
-    return (
-        <DNSRecordsDataTable
-            columns={columns}
-            data={records}
-            type={type}
-        />
-    );
+    return <DNSRecordsDataTable columns={columns} data={records} type={type} />;
 }

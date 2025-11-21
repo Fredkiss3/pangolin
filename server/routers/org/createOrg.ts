@@ -28,10 +28,10 @@ import { FeatureId } from "@server/lib/billing";
 import { build } from "@server/build";
 
 const createOrgSchema = z.strictObject({
-        orgId: z.string(),
-        name: z.string().min(1).max(255),
-        subnet: z.string()
-    });
+    orgId: z.string(),
+    name: z.string().min(1).max(255),
+    subnet: z.string()
+});
 
 registry.registerPath({
     method: "put",

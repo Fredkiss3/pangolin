@@ -274,9 +274,7 @@ export default function UsersTable({ users: u }: UsersTableProps) {
                 }}
                 dialog={
                     <div>
-                        <p>
-                            {t("userQuestionOrgRemove")}
-                        </p>
+                        <p>{t("userQuestionOrgRemove")}</p>
                         <p>{t("userMessageOrgRemove")}</p>
                     </div>
                 }

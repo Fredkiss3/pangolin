@@ -239,9 +239,7 @@ export default function ClientsTable({ clients, orgId }: ClientTableProps) {
                             </div>
                         </Badge>
                         {originalRow.olmUpdateAvailable && (
-                            <InfoPopup
-                                info={t("olmUpdateAvailableInfo")}
-                            />
+                            <InfoPopup info={t("olmUpdateAvailableInfo")} />
                         )}
                     </div>
                 );
@@ -269,7 +267,6 @@ export default function ClientsTable({ clients, orgId }: ClientTableProps) {
                 const clientRow = row.original;
                 return (
                     <div className="flex items-center justify-end">
-
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="h-8 w-8 p-0">
@@ -321,12 +318,8 @@ export default function ClientsTable({ clients, orgId }: ClientTableProps) {
                     }}
                     dialog={
                         <div>
-                            <p>
-                                {t("deleteClientQuestion")}
-                            </p>
-                            <p>
-                                {t("clientMessageRemove")}
-                            </p>
+                            <p>{t("deleteClientQuestion")}</p>
+                            <p>{t("clientMessageRemove")}</p>
                         </div>
                     }
                     buttonText="Confirm Delete Client"

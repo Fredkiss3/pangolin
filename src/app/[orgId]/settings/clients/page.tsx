@@ -46,7 +46,7 @@ export default async function ClientsPage(props: ClientsPageProps) {
             orgId: params.orgId,
             online: client.online,
             olmVersion: client.olmVersion || undefined,
-            olmUpdateAvailable: client.olmUpdateAvailable || false,
+            olmUpdateAvailable: client.olmUpdateAvailable || false
         };
     });
 

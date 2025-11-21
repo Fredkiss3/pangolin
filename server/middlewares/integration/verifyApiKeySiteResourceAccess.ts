@@ -40,19 +40,18 @@ export async function verifyApiKeySiteResourceAccess(
         const [siteResource] = await db
             .select()
             .from(siteResources)
-            .where(and(
-                eq(siteResources.siteResourceId, siteResourceId),
-                eq(siteResources.siteId, siteId),
-                eq(siteResources.orgId, orgId)
-            ))
+            .where(
+                and(
+                    eq(siteResources.siteResourceId, siteResourceId),
+                    eq(siteResources.siteId, siteId),
+                    eq(siteResources.orgId, orgId)
+                )
+            )
             .limit(1);
 
         if (!siteResource) {
             return next(
-                createHttpError(
-                    HttpCode.NOT_FOUND,
-                    "Site resource not found"
-                )
+                createHttpError(HttpCode.NOT_FOUND, "Site resource not found")
             );
         }
 
@@ -68,7 +67,7 @@ export async function verifyApiKeySiteResourceAccess(
                     )
                 )
                 .limit(1);
-            
+
             if (apiKeyOrgRes.length === 0) {
                 return next(
                     createHttpError(
@@ -77,7 +76,7 @@ export async function verifyApiKeySiteResourceAccess(
                     )
                 );
             }
-            
+
             req.apiKeyOrg = apiKeyOrgRes[0];
         }
 

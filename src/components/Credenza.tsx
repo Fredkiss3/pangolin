@@ -78,7 +78,10 @@ const CredenzaClose = ({ className, children, ...props }: CredenzaProps) => {
     const CredenzaClose = isDesktop ? DialogClose : DrawerClose;
 
     return (
-        <CredenzaClose className={cn("mb-3 mt-3 md:mt-0 md:mb-0", className)} {...props}>
+        <CredenzaClose
+            className={cn("mb-3 mt-3 md:mt-0 md:mb-0", className)}
+            {...props}
+        >
             {children}
         </CredenzaClose>
     );

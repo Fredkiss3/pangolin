@@ -13,18 +13,18 @@ import { addTargets } from "../client/targets";
 import { getUniqueSiteResourceName } from "@server/db/names";
 
 const createSiteResourceParamsSchema = z.strictObject({
-        siteId: z.string().transform(Number).pipe(z.int().positive()),
-        orgId: z.string()
-    });
+    siteId: z.string().transform(Number).pipe(z.int().positive()),
+    orgId: z.string()
+});
 
 const createSiteResourceSchema = z.strictObject({
-        name: z.string().min(1).max(255),
-        protocol: z.enum(["tcp", "udp"]),
-        proxyPort: z.int().positive(),
-        destinationPort: z.int().positive(),
-        destinationIp: z.string(),
-        enabled: z.boolean().default(true)
-    });
+    name: z.string().min(1).max(255),
+    protocol: z.enum(["tcp", "udp"]),
+    proxyPort: z.int().positive(),
+    destinationPort: z.int().positive(),
+    destinationIp: z.string(),
+    enabled: z.boolean().default(true)
+});
 
 export type CreateSiteResourceBody = z.infer<typeof createSiteResourceSchema>;
 export type CreateSiteResourceResponse = SiteResource;
@@ -146,7 +146,13 @@ export async function createSiteResource(
             return next(createHttpError(HttpCode.NOT_FOUND, "Newt not found"));
         }
 
-        await addTargets(newt.newtId, destinationIp, destinationPort, protocol, proxyPort);
+        await addTargets(
+            newt.newtId,
+            destinationIp,
+            destinationPort,
+            protocol,
+            proxyPort
+        );
 
         logger.info(
             `Created site resource ${newSiteResource.siteResourceId} for site ${siteId}`

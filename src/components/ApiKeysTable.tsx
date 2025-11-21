@@ -155,7 +155,11 @@ export default function ApiKeysTable({ apiKeys }: ApiKeyTableProps) {
                         </DropdownMenu>
                         <div className="flex items-center justify-end">
                             <Link href={`/admin/api-keys/${r.id}`}>
-                                <Button variant={"secondary"} className="ml-2" size="sm">
+                                <Button
+                                    variant={"secondary"}
+                                    className="ml-2"
+                                    size="sm"
+                                >
                                     {t("edit")}
                                     <ArrowRight className="ml-2 w-4 h-4" />
                                 </Button>
@@ -178,13 +182,9 @@ export default function ApiKeysTable({ apiKeys }: ApiKeyTableProps) {
                     }}
                     dialog={
                         <div>
-                            <p>
-                                {t("apiKeysQuestionRemove")}
-                            </p>
+                            <p>{t("apiKeysQuestionRemove")}</p>
 
-                            <p>
-                                {t("apiKeysMessageRemove")}
-                            </p>
+                            <p>{t("apiKeysMessageRemove")}</p>
                         </div>
                     }
                     buttonText={t("apiKeysDeleteConfirm")}

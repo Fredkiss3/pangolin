@@ -27,17 +27,17 @@ import { OpenAPITags, registry } from "@server/openApi";
 import { listExitNodes } from "#dynamic/lib/exitNodes";
 
 const createClientParamsSchema = z.strictObject({
-        orgId: z.string()
-    });
+    orgId: z.string()
+});
 
 const createClientSchema = z.strictObject({
-        name: z.string().min(1).max(255),
-        siteIds: z.array(z.int().positive()),
-        olmId: z.string(),
-        secret: z.string(),
-        subnet: z.string(),
-        type: z.enum(["olm"])
-    });
+    name: z.string().min(1).max(255),
+    siteIds: z.array(z.int().positive()),
+    olmId: z.string(),
+    secret: z.string(),
+    subnet: z.string(),
+    type: z.enum(["olm"])
+});
 
 export type CreateClientBody = z.infer<typeof createClientSchema>;
 

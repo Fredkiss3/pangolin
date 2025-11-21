@@ -18,11 +18,14 @@ import { Router } from "express";
 import {
     verifyApiKey,
     verifyApiKeyHasAction,
-    verifyApiKeyIsRoot,
+    verifyApiKeyIsRoot
 } from "@server/middlewares";
 import { ActionsEnum } from "@server/auth/actions";
 
-import { unauthenticated as ua, authenticated as a } from "@server/routers/integration";
+import {
+    unauthenticated as ua,
+    authenticated as a
+} from "@server/routers/integration";
 import { logActionAudit } from "#private/middlewares";
 
 export const unauthenticated = ua;
@@ -33,7 +36,7 @@ authenticated.post(
     verifyApiKeyIsRoot, // We are the only ones who can use root key so its fine
     verifyApiKeyHasAction(ActionsEnum.sendUsageNotification),
     logActionAudit(ActionsEnum.sendUsageNotification),
-    org.sendUsageNotification,
+    org.sendUsageNotification
 );
 
 authenticated.delete(
@@ -41,5 +44,5 @@ authenticated.delete(
     verifyApiKeyIsRoot,
     verifyApiKeyHasAction(ActionsEnum.deleteIdp),
     logActionAudit(ActionsEnum.deleteIdp),
-    orgIdp.deleteOrgIdp,
+    orgIdp.deleteOrgIdp
 );

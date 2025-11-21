@@ -20,7 +20,9 @@ export const startOlmOfflineChecker = (): void => {
 
     offlineCheckerInterval = setInterval(async () => {
         try {
-            const twoMinutesAgo = Math.floor((Date.now() - OFFLINE_THRESHOLD_MS) / 1000);
+            const twoMinutesAgo = Math.floor(
+                (Date.now() - OFFLINE_THRESHOLD_MS) / 1000
+            );
 
             // Find clients that haven't pinged in the last 2 minutes and mark them as offline
             await db
@@ -35,7 +37,6 @@ export const startOlmOfflineChecker = (): void => {
                         )
                     )
                 );
-
         } catch (error) {
             logger.error("Error in offline checker interval", { error });
         }
@@ -78,7 +79,7 @@ export const handleOlmPingMessage: MessageHandler = async (context) => {
             .update(clients)
             .set({
                 lastPing: Math.floor(Date.now() / 1000),
-                online: true,
+                online: true
             })
             .where(eq(clients.clientId, olm.clientId));
     } catch (error) {
@@ -89,7 +90,7 @@ export const handleOlmPingMessage: MessageHandler = async (context) => {
         message: {
             type: "pong",
             data: {
-                timestamp: new Date().toISOString(),
+                timestamp: new Date().toISOString()
             }
         },
         broadcast: false,

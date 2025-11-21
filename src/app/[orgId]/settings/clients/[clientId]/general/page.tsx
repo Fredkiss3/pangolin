@@ -56,7 +56,9 @@ export default function GeneralPage() {
     const router = useRouter();
     const [sites, setSites] = useState<Tag[]>([]);
     const [clientSites, setClientSites] = useState<Tag[]>([]);
-    const [activeSitesTagIndex, setActiveSitesTagIndex] = useState<number | null>(null);
+    const [activeSitesTagIndex, setActiveSitesTagIndex] = useState<
+        number | null
+    >(null);
 
     const form = useForm({
         resolver: zodResolver(GeneralFormSchema),
@@ -75,14 +77,14 @@ export default function GeneralPage() {
                 const res = await api.get<AxiosResponse<ListSitesResponse>>(
                     `/org/${client?.orgId}/sites/`
                 );
-                
+
                 const availableSites = res.data.data.sites
                     .filter((s) => s.type === "newt" && s.subnet)
                     .map((site) => ({
                         id: site.siteId.toString(),
                         text: site.name
                     }));
-                
+
                 setSites(availableSites);
 
                 // Filter sites to only include those assigned to the client
@@ -115,7 +117,7 @@ export default function GeneralPage() {
         try {
             await api.post(`/client/${client?.clientId}`, {
                 name: data.name,
-                siteIds: data.siteIds.map(site => parseInt(site.id))
+                siteIds: data.siteIds.map((site) => parseInt(site.id))
             });
 
             updateClient({ name: data.name });
@@ -130,10 +132,7 @@ export default function GeneralPage() {
             toast({
                 variant: "destructive",
                 title: t("clientUpdateFailed"),
-                description: formatAxiosError(
-                    e,
-                    t("clientUpdateError")
-                )
+                description: formatAxiosError(e, t("clientUpdateError"))
             });
         } finally {
             setLoading(false);
@@ -182,21 +181,30 @@ export default function GeneralPage() {
                                             <FormLabel>{t("sites")}</FormLabel>
                                             <TagInput
                                                 {...field}
-                                                activeTagIndex={activeSitesTagIndex}
-                                                setActiveTagIndex={setActiveSitesTagIndex}
+                                                activeTagIndex={
+                                                    activeSitesTagIndex
+                                                }
+                                                setActiveTagIndex={
+                                                    setActiveSitesTagIndex
+                                                }
                                                 placeholder={t("selectSites")}
                                                 size="sm"
                                                 tags={form.getValues().siteIds}
                                                 setTags={(newTags) => {
                                                     form.setValue(
                                                         "siteIds",
-                                                        newTags as [Tag, ...Tag[]]
+                                                        newTags as [
+                                                            Tag,
+                                                            ...Tag[]
+                                                        ]
                                                     );
                                                 }}
                                                 enableAutocomplete={true}
                                                 autocompleteOptions={sites}
                                                 allowDuplicates={false}
-                                                restrictTagsToAutocompleteOptions={true}
+                                                restrictTagsToAutocompleteOptions={
+                                                    true
+                                                }
                                                 sortTags={true}
                                             />
                                             <FormDescription>

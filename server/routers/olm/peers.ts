@@ -39,7 +39,11 @@ export async function addPeer(
     logger.info(`Added peer ${peer.publicKey} to olm ${olm.olmId}`);
 }
 
-export async function deletePeer(clientId: number, siteId: number, publicKey: string) {
+export async function deletePeer(
+    clientId: number,
+    siteId: number,
+    publicKey: string
+) {
     const [olm] = await db
         .select()
         .from(olms)
