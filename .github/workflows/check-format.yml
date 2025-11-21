@@ -21,4 +21,4 @@ jobs:
                   node-version: "22"
 
             - name: Run prettier
-              run: npx prettier . --check
+              run: npx prettier --check .
