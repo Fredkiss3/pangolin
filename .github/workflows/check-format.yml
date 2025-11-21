@@ -22,3 +22,10 @@ jobs:
 
             - name: Run prettier
               run: npx prettier --check .
+              continue-on-error: true
+
+            - name: Recommend format command
+              if: failure()
+              run: |
+                  echo "::error::Code formatting issues detected. Please run `npm run format` to fix formatting issues."
+                  exit 1
