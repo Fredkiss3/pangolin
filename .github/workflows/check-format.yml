@@ -23,6 +23,6 @@ jobs:
             - name: Run prettier
               run: |
                   npx prettier --check . || {
-                    echo "Code formatting issues detected. Please run `npm run format` to fix formatting issues."
+                    echo -e "\033[0;31mCode formatting issues detected. Please run 'npm run format' to fix formatting issues.\033[0m"
                     exit 1
                   }
