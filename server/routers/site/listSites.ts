@@ -151,12 +151,12 @@ const listSitesSchema = z.object({
         }),
     query: z.string().optional(),
     sort_by: z
-        .enum(["name", "megabytesIn", "megabytesOut"])
+        .enum(["name", "megabytesIn", "megabytesOut", "version"])
         .optional()
         .catch(undefined)
         .openapi({
             type: "string",
-            enum: ["name", "megabytesIn", "megabytesOut"],
+            enum: ["name", "megabytesIn", "megabytesOut", "version"],
             description: "Field to sort by"
         }),
     order: z
@@ -431,16 +431,23 @@ export async function listSites(
             .from(sites)
             .where(and(...conditions));
 
+        let orderBy = asc(sites.name);
+        if (sort_by) {
+            const ordering = order === "asc" ? asc : desc;
+            switch (sort_by) {
+                case "version":
+                    orderBy = ordering(newts.version);
+                    break;
+                default:
+                    orderBy = ordering(sites[sort_by]);
+                    break;
+            }
+        }
+
         const siteListQuery = baseQuery
             .limit(pageSize)
             .offset(pageSize * (page - 1))
-            .orderBy(
-                sort_by
-                    ? order === "asc"
-                        ? asc(sites[sort_by])
-                        : desc(sites[sort_by])
-                    : asc(sites.name)
-            );
+            .orderBy(orderBy);
 
         const [countRows, rows] = await Promise.all([
             countQuery,

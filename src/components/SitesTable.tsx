@@ -328,7 +328,25 @@ export default function SitesTable({
                 accessorKey: "type",
                 friendlyName: t("type"),
                 header: () => {
-                    return <span className="p-3">{t("type")}</span>;
+                    const dataInOrder = getSortDirection(
+                        "version",
+                        searchParams
+                    );
+                    const Icon =
+                        dataInOrder === "asc"
+                            ? ArrowDown01Icon
+                            : dataInOrder === "desc"
+                              ? ArrowUp10Icon
+                              : ChevronsUpDownIcon;
+                    return (
+                        <Button
+                            variant="ghost"
+                            onClick={() => toggleSort("version")}
+                        >
+                            {t("type")}
+                            <Icon className="ml-2 h-4 w-4" />
+                        </Button>
+                    );
                 },
                 cell: ({ row }) => {
                     const originalRow = row.original;
